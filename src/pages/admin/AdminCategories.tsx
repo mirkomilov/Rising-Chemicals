@@ -53,18 +53,28 @@ export default function AdminCategories() {
       parent_id: form.parent_id || null,
     };
 
-    if (editingId) {
-      await supabase.from("categories").update(payload).eq("id", editingId);
-    } else {
-      await supabase.from("categories").insert(payload);
+    const { error } = editingId
+      ? await supabase.from("categories").update(payload).eq("id", editingId)
+      : await supabase.from("categories").insert(payload);
+
+    if (error) {
+      console.error(error);
+      alert(`Xatolik: ${error.message}`);
+      return;
     }
+
     resetForm();
     load();
   }
 
   async function handleDelete(id: string) {
     if (!confirm(t("admin.categories.confirmDelete"))) return;
-    await supabase.from("categories").delete().eq("id", id);
+    const { error } = await supabase.from("categories").delete().eq("id", id);
+    if (error) {
+      console.error(error);
+      alert(`Xatolik: ${error.message}`);
+      return;
+    }
     load();
   }
 

@@ -158,18 +158,28 @@ export default function AdminProducts() {
       tech_params_en: rowsToTechParams(techParams.en),
     };
 
-    if (editingId) {
-      await supabase.from("products").update(payload).eq("id", editingId);
-    } else {
-      await supabase.from("products").insert(payload);
+    const { error } = editingId
+      ? await supabase.from("products").update(payload).eq("id", editingId)
+      : await supabase.from("products").insert(payload);
+
+    if (error) {
+      console.error(error);
+      alert(`Xatolik: ${error.message}`);
+      return;
     }
+
     resetForm();
     loadAll();
   }
 
   async function handleDelete(id: string) {
     if (!confirm(t("admin.products.confirmDelete"))) return;
-    await supabase.from("products").delete().eq("id", id);
+    const { error } = await supabase.from("products").delete().eq("id", id);
+    if (error) {
+      console.error(error);
+      alert(`Xatolik: ${error.message}`);
+      return;
+    }
     loadAll();
   }
 
