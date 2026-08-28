@@ -32,10 +32,22 @@ export default function Products() {
       .then(({ data }) => setCategories(data ?? []));
   }, [language]);
 
+  // Sahifa birinchi ochilganda "hammasi" ko'rinishi o'rniga to'g'ridan-to'g'ri
+  // birinchi (asosiy) kategoriya tanlangan holda ochiladi.
   useEffect(() => {
-    let query = supabase.from("products").select("*").eq("is_active", true);
-    if (activeCategory) query = query.eq("category_id", activeCategory);
-    query.then(({ data }) => setProducts(data ?? []));
+    if (activeCategory !== null || categories.length === 0) return;
+    const firstRoot = categories.find((c) => !c.parent_id);
+    if (firstRoot) setActiveCategory(firstRoot.id);
+  }, [categories, activeCategory]);
+
+  useEffect(() => {
+    if (!activeCategory) return;
+    supabase
+      .from("products")
+      .select("*")
+      .eq("is_active", true)
+      .eq("category_id", activeCategory)
+      .then(({ data }) => setProducts(data ?? []));
   }, [activeCategory]);
 
   // get_category_tree() cheksiz chuqurlikdagi daraxtni depth/path bilan
@@ -99,17 +111,6 @@ export default function Products() {
       {/* ===== SIDEBAR — KATALOG ===== */}
       <aside className="w-64 shrink-0">
         <h3 className="mb-3 font-semibold">{t("products.catalog")}</h3>
-        <button
-          onClick={() => setActiveCategory(null)}
-          className={cn(
-            "block w-full rounded-md px-3 py-2 text-left text-sm",
-            activeCategory === null
-              ? "bg-primary text-primary-foreground"
-              : "text-muted-foreground hover:bg-muted"
-          )}
-        >
-          {t("products.all")}
-        </button>
 
         {roots.map((root) => renderCategoryNode(root))}
       </aside>

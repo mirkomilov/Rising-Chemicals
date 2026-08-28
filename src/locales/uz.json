@@ -28,7 +28,6 @@
   },
   "products": {
     "catalog": "Katalog",
-    "all": "Barchasi",
     "title": "Mahsulotlar",
     "noProducts": "Bu kategoriyada mahsulot topilmadi.",
     "addToCart": "Savatchaga qo'shish",

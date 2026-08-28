@@ -28,7 +28,6 @@
   },
   "products": {
     "catalog": "Catalog",
-    "all": "All",
     "title": "Products",
     "noProducts": "No products found in this category.",
     "addToCart": "Add to cart",
