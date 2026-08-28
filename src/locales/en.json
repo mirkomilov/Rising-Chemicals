@@ -32,7 +32,14 @@
     "noProducts": "No products found in this category.",
     "addToCart": "Add to cart",
     "expand": "Expand",
-    "collapse": "Collapse"
+    "collapse": "Collapse",
+    "detail": {
+      "loading": "Loading...",
+      "notFound": "Product not found.",
+      "back": "Back",
+      "description": "Description",
+      "techParams": "Technical parameters"
+    }
   },
   "cart": {
     "title": "Cart",
@@ -98,10 +105,10 @@
       "selectBrand": "Select brand",
       "price": "Price (UZS)",
       "quantity": "Quantity (in stock)",
-      "imageLabel": "Product image",
-      "chooseImage": "Choose image",
-      "changeImage": "Change image",
+      "imageLabel": "Product images",
+      "chooseImage": "Add image",
       "removeImage": "Remove image",
+      "primaryImage": "Primary",
       "uploading": "Uploading...",
       "uploadError": "An error occurred while uploading the image.",
       "descriptionTitle": "Description ({{locale}})",

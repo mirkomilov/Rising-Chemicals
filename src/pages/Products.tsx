@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import type { CategoryTreeNode, Product } from "@/types/database.types";
@@ -127,18 +128,20 @@ export default function Products() {
               key={p.id}
               className="flex flex-col rounded-lg border border-border bg-card p-3"
             >
-              <div className="mb-2 aspect-square overflow-hidden rounded-md bg-muted">
-                {p.image_url && (
-                  <img
-                    src={p.image_url}
-                    alt={productName(p, language)}
-                    className="h-full w-full object-cover"
-                  />
-                )}
-              </div>
-              <p className="line-clamp-2 text-sm font-medium">
-                {productName(p, language)}
-              </p>
+              <Link to={`/products/${p.id}`} className="block">
+                <div className="mb-2 aspect-square overflow-hidden rounded-md bg-muted">
+                  {p.image_urls?.[0] && (
+                    <img
+                      src={p.image_urls[0]}
+                      alt={productName(p, language)}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+                <p className="line-clamp-2 text-sm font-medium hover:text-primary">
+                  {productName(p, language)}
+                </p>
+              </Link>
 
               {/* Texnik parametrlar */}
               {Object.keys(productTechParams(p, language)).length > 0 && (

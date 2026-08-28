@@ -6,7 +6,7 @@ import { productName } from "@/lib/i18n";
 import { useLanguageStore } from "@/store/languageStore";
 import { categoryDisplayName, categoryPathIds } from "@/lib/categoryTree";
 import { cn } from "@/lib/utils";
-import { Plus, Trash2, Pencil, Upload, Image as ImageIcon, X } from "lucide-react";
+import { Plus, Trash2, Pencil, Upload, X } from "lucide-react";
 
 const LOCALES: Locale[] = ["uz", "ru", "en"];
 const LOCALE_LABELS: Record<Locale, string> = { uz: "UZ", ru: "RU", en: "EN" };
@@ -27,7 +27,6 @@ const emptyForm = {
   description_uz: "",
   description_ru: "",
   description_en: "",
-  image_url: "",
   is_top: false,
 };
 
@@ -86,6 +85,7 @@ export default function AdminProducts() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [form, setForm] = useState(emptyForm);
   const [categoryPath, setCategoryPath] = useState<string[]>([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [techParams, setTechParams] = useState<Record<Locale, TechParamRow[]>>(emptyTechParams());
   const [activeLocale, setActiveLocale] = useState<Locale>("ru");
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -108,6 +108,7 @@ export default function AdminProducts() {
   function resetForm() {
     setForm(emptyForm);
     setCategoryPath([]);
+    setImageUrls([]);
     setTechParams(emptyTechParams());
     setActiveLocale("ru");
     setEditingId(null);
@@ -125,10 +126,10 @@ export default function AdminProducts() {
       description_uz: p.description_uz ?? "",
       description_ru: p.description_ru ?? "",
       description_en: p.description_en ?? "",
-      image_url: p.image_url ?? "",
       is_top: p.is_top,
     });
     setCategoryPath(p.category_id ? categoryPathIds(categories, p.category_id) : []);
+    setImageUrls(p.image_urls ?? []);
     setTechParams({
       uz: techParamsToRows(p.tech_params_uz),
       ru: techParamsToRows(p.tech_params_ru),
@@ -152,7 +153,7 @@ export default function AdminProducts() {
       description_uz: form.description_uz || null,
       description_ru: form.description_ru || null,
       description_en: form.description_en || null,
-      image_url: form.image_url || null,
+      image_urls: imageUrls,
       is_top: form.is_top,
       tech_params_uz: rowsToTechParams(techParams.uz),
       tech_params_ru: rowsToTechParams(techParams.ru),
@@ -194,22 +195,26 @@ export default function AdminProducts() {
     setTechParams({ ...techParams, [locale]: [...techParams[locale], { key: "", value: "" }] });
   }
 
-  async function handleImageFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
+  async function handleImageFilesChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files ?? []);
     e.target.value = "";
-    if (!file) return;
+    if (files.length === 0) return;
 
     setUploadingImage(true);
     try {
-      const ext = file.name.split(".").pop();
-      const path = `${crypto.randomUUID()}.${ext}`;
-      const { error } = await supabase.storage
-        .from(PRODUCT_IMAGES_BUCKET)
-        .upload(path, file, { cacheControl: "3600", upsert: false });
-      if (error) throw error;
+      const uploaded: string[] = [];
+      for (const file of files) {
+        const ext = file.name.split(".").pop();
+        const path = `${crypto.randomUUID()}.${ext}`;
+        const { error } = await supabase.storage
+          .from(PRODUCT_IMAGES_BUCKET)
+          .upload(path, file, { cacheControl: "3600", upsert: false });
+        if (error) throw error;
 
-      const { data } = supabase.storage.from(PRODUCT_IMAGES_BUCKET).getPublicUrl(path);
-      setForm((f) => ({ ...f, image_url: data.publicUrl }));
+        const { data } = supabase.storage.from(PRODUCT_IMAGES_BUCKET).getPublicUrl(path);
+        uploaded.push(data.publicUrl);
+      }
+      setImageUrls((prev) => [...prev, ...uploaded]);
     } catch (err) {
       console.error(err);
       const message = err instanceof Error ? err.message : String(err);
@@ -217,6 +222,10 @@ export default function AdminProducts() {
     } finally {
       setUploadingImage(false);
     }
+  }
+
+  function removeImageAt(idx: number) {
+    setImageUrls((prev) => prev.filter((_, i) => i !== idx));
   }
 
   return (
@@ -317,49 +326,48 @@ export default function AdminProducts() {
 
           <div>
             <p className="mb-2 text-sm font-medium">{t("admin.products.imageLabel")}</p>
-            <div className="flex items-center gap-5">
-              <div className="group relative h-28 w-28 shrink-0 overflow-hidden rounded-xl border border-dashed border-border bg-muted">
-                {form.image_url ? (
-                  <>
-                    <img
-                      src={form.image_url}
-                      alt=""
-                      className="h-full w-full object-cover"
-                    />
-                    {!uploadingImage && (
-                      <button
-                        type="button"
-                        onClick={() => setForm({ ...form, image_url: "" })}
-                        aria-label={t("admin.products.removeImage")}
-                        className="absolute right-1.5 top-1.5 rounded-full bg-black/60 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                      >
-                        <X className="h-3.5 w-3.5" />
-                      </button>
-                    )}
-                  </>
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                    <ImageIcon className="h-7 w-7" />
-                  </div>
-                )}
-              </div>
+            <div className="flex flex-wrap items-center gap-3">
+              {imageUrls.map((url, idx) => (
+                <div
+                  key={url}
+                  className="group relative h-28 w-28 shrink-0 overflow-hidden rounded-xl border border-border bg-muted"
+                >
+                  <img src={url} alt="" className="h-full w-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => removeImageAt(idx)}
+                    aria-label={t("admin.products.removeImage")}
+                    className="absolute right-1.5 top-1.5 rounded-full bg-black/60 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                  {idx === 0 && (
+                    <span className="absolute bottom-1 left-1 rounded bg-black/60 px-1.5 py-0.5 text-[10px] font-medium text-white">
+                      {t("admin.products.primaryImage")}
+                    </span>
+                  )}
+                </div>
+              ))}
 
               <label
                 className={cn(
-                  "flex cursor-pointer items-center gap-2 rounded-md border border-input bg-background px-4 py-2.5 text-sm font-medium transition-colors hover:bg-muted",
+                  "flex h-28 w-28 shrink-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-dashed border-border bg-background text-center text-xs font-medium text-muted-foreground transition-colors hover:bg-muted",
                   uploadingImage && "pointer-events-none opacity-50"
                 )}
               >
-                <Upload className="h-4 w-4" />
-                {uploadingImage
-                  ? t("admin.products.uploading")
-                  : form.image_url
-                    ? t("admin.products.changeImage")
-                    : t("admin.products.chooseImage")}
+                {uploadingImage ? (
+                  <span>{t("admin.products.uploading")}</span>
+                ) : (
+                  <>
+                    <Upload className="h-5 w-5" />
+                    <span>{t("admin.products.chooseImage")}</span>
+                  </>
+                )}
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={handleImageFileChange}
+                  multiple
+                  onChange={handleImageFilesChange}
                   disabled={uploadingImage}
                   className="hidden"
                 />

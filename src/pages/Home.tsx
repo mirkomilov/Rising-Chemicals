@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import type { Brand, Product } from "@/types/database.types";
 import { useLanguageStore } from "@/store/languageStore";
@@ -72,14 +73,15 @@ export default function Home() {
             <p className="text-sm text-muted-foreground">{t("home.noTopProducts")}</p>
           )}
           {topProducts.map((p) => (
-            <div
+            <Link
               key={p.id}
-              className="rounded-lg border border-border bg-card p-3 transition hover:shadow-md"
+              to={`/products/${p.id}`}
+              className="block rounded-lg border border-border bg-card p-3 transition hover:shadow-md"
             >
               <div className="mb-2 aspect-square overflow-hidden rounded-md bg-muted">
-                {p.image_url && (
+                {p.image_urls?.[0] && (
                   <img
-                    src={p.image_url}
+                    src={p.image_urls[0]}
                     alt={productName(p, language)}
                     className="h-full w-full object-cover"
                   />
@@ -91,7 +93,7 @@ export default function Home() {
               <p className="mt-1 font-semibold text-primary">
                 {p.price.toLocaleString()} {t("common.currency")}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>

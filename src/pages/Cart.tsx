@@ -96,9 +96,9 @@ export default function Cart() {
                 className="flex items-center gap-4 rounded-lg border border-border bg-card p-3"
               >
                 <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
-                  {product.image_url && (
+                  {product.image_urls?.[0] && (
                     <img
-                      src={product.image_url}
+                      src={product.image_urls[0]}
                       alt={productName(product, language)}
                       className="h-full w-full object-cover"
                     />

@@ -1,0 +1,141 @@
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { ChevronLeft } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
+import type { Product } from "@/types/database.types";
+import { useCartStore } from "@/store/cartStore";
+import { useLanguageStore } from "@/store/languageStore";
+import { productName, productDescription, productTechParams } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
+
+export default function ProductDetail() {
+  const { id } = useParams<{ id: string }>();
+  const { t } = useTranslation();
+  const language = useLanguageStore((s) => s.language);
+  const addItem = useCartStore((s) => s.addItem);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeImage, setActiveImage] = useState(0);
+
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    supabase
+      .from("products")
+      .select("*")
+      .eq("id", id)
+      .single()
+      .then(({ data }) => {
+        setProduct(data ?? null);
+        setActiveImage(0);
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="mx-auto max-w-5xl px-4 py-16 text-center text-muted-foreground">
+        {t("products.detail.loading")}
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="mx-auto max-w-5xl px-4 py-16 text-center">
+        <p className="text-muted-foreground">{t("products.detail.notFound")}</p>
+        <Link to="/products" className="mt-4 inline-block text-primary hover:underline">
+          {t("products.detail.back")}
+        </Link>
+      </div>
+    );
+  }
+
+  const images = product.image_urls ?? [];
+  const description = productDescription(product, language);
+  const techParams = productTechParams(product, language);
+
+  return (
+    <div className="mx-auto max-w-5xl px-4 py-8">
+      <Link
+        to="/products"
+        className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
+      >
+        <ChevronLeft className="h-4 w-4" />
+        {t("products.detail.back")}
+      </Link>
+
+      <div className="grid gap-8 md:grid-cols-2">
+        <div>
+          <div className="aspect-square overflow-hidden rounded-lg border border-border bg-muted">
+            {images[activeImage] && (
+              <img
+                src={images[activeImage]}
+                alt={productName(product, language)}
+                className="h-full w-full object-cover"
+              />
+            )}
+          </div>
+          {images.length > 1 && (
+            <div className="mt-3 flex gap-2">
+              {images.map((url, idx) => (
+                <button
+                  key={url}
+                  type="button"
+                  onClick={() => setActiveImage(idx)}
+                  className={cn(
+                    "h-16 w-16 overflow-hidden rounded-md border-2",
+                    idx === activeImage ? "border-primary" : "border-transparent"
+                  )}
+                >
+                  <img src={url} alt="" className="h-full w-full object-cover" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div>
+          <h1 className="text-2xl font-bold">{productName(product, language)}</h1>
+          <p className="mt-2 text-2xl font-semibold text-primary">
+            {product.price.toLocaleString()} {t("common.currency")}
+          </p>
+
+          {description && (
+            <div className="mt-6">
+              <h2 className="mb-2 font-semibold">{t("products.detail.description")}</h2>
+              <p className="whitespace-pre-line text-sm text-muted-foreground">
+                {description}
+              </p>
+            </div>
+          )}
+
+          {Object.keys(techParams).length > 0 && (
+            <div className="mt-6">
+              <h2 className="mb-2 font-semibold">{t("products.detail.techParams")}</h2>
+              <ul className="text-sm text-muted-foreground">
+                {Object.entries(techParams).map(([k, v]) => (
+                  <li
+                    key={k}
+                    className="flex justify-between gap-4 border-b border-border py-1.5"
+                  >
+                    <span>{k}</span>
+                    <span className="text-right font-medium text-foreground">{v}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <button
+            onClick={() => addItem(product)}
+            className="mt-6 w-full rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground hover:opacity-90 sm:w-auto"
+          >
+            {t("products.addToCart")}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

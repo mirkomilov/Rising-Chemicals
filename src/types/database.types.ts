@@ -51,7 +51,7 @@ export interface Product {
   tech_params_uz: Record<string, string>;
   tech_params_ru: Record<string, string>;
   tech_params_en: Record<string, string>;
-  image_url: string | null;
+  image_urls: string[];
   is_top: boolean;
   is_active: boolean;
   created_at: string;

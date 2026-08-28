@@ -32,7 +32,14 @@
     "noProducts": "Bu kategoriyada mahsulot topilmadi.",
     "addToCart": "Savatchaga qo'shish",
     "expand": "Ochish",
-    "collapse": "Yopish"
+    "collapse": "Yopish",
+    "detail": {
+      "loading": "Yuklanmoqda...",
+      "notFound": "Mahsulot topilmadi.",
+      "back": "Orqaga",
+      "description": "Tavsif",
+      "techParams": "Texnik parametrlar"
+    }
   },
   "cart": {
     "title": "Savatcha",
@@ -98,10 +105,10 @@
       "selectBrand": "Brend tanlang",
       "price": "Narxi (so'm)",
       "quantity": "Soni (ombordagi)",
-      "imageLabel": "Mahsulot rasmi",
-      "chooseImage": "Rasm tanlash",
-      "changeImage": "Rasmni almashtirish",
+      "imageLabel": "Mahsulot rasmlari",
+      "chooseImage": "Rasm qo'shish",
       "removeImage": "Rasmni olib tashlash",
+      "primaryImage": "Asosiy",
       "uploading": "Yuklanmoqda...",
       "uploadError": "Rasmni yuklashda xatolik yuz berdi.",
       "descriptionTitle": "Tavsif ({{locale}})",

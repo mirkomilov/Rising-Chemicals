@@ -32,7 +32,14 @@
     "noProducts": "В этой категории товары не найдены.",
     "addToCart": "Добавить в корзину",
     "expand": "Развернуть",
-    "collapse": "Свернуть"
+    "collapse": "Свернуть",
+    "detail": {
+      "loading": "Загрузка...",
+      "notFound": "Товар не найден.",
+      "back": "Назад",
+      "description": "Описание",
+      "techParams": "Технические характеристики"
+    }
   },
   "cart": {
     "title": "Корзина",
@@ -98,10 +105,10 @@
       "selectBrand": "Выберите бренд",
       "price": "Цена (сум)",
       "quantity": "Количество (на складе)",
-      "imageLabel": "Изображение товара",
-      "chooseImage": "Выбрать изображение",
-      "changeImage": "Заменить изображение",
+      "imageLabel": "Изображения товара",
+      "chooseImage": "Добавить изображение",
       "removeImage": "Удалить изображение",
+      "primaryImage": "Основное",
       "uploading": "Загрузка...",
       "uploadError": "Ошибка при загрузке изображения.",
       "descriptionTitle": "Описание ({{locale}})",
