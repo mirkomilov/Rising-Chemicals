@@ -1,0 +1,156 @@
+{
+  "header": {
+    "home": "Bosh sahifa",
+    "products": "Mahsulotlar",
+    "contact": "Aloqa",
+    "cart": "Savatcha",
+    "toggleTheme": "Temani almashtirish",
+    "toggleLanguage": "Tilni almashtirish"
+  },
+  "footer": {
+    "tagline": "Sifatli kimyoviy mahsulotlar — ishonchli narxlarda va texnik xususiyatlari bilan.",
+    "contactTitle": "Aloqa",
+    "phone": "Tel: +998 XX XXX XX XX",
+    "email": "Email: info@risingchemicals.uz",
+    "address": "Manzil: Toshkent sh.",
+    "socialTitle": "Ijtimoiy tarmoqlar",
+    "rights": "© {{year}} Rising Chemicals. Barcha huquqlar himoyalangan."
+  },
+  "home": {
+    "heroTitle": "Rising Chemicals",
+    "heroSubtitle": "Sanoat va laboratoriya uchun sifatli kimyoviy mahsulotlar — narxi va texnik parametrlari bilan.",
+    "partnersTitle": "Hamkor brendlar",
+    "noPartners": "Hozircha brendlar qo'shilmagan (admin panel orqali qo'shiladi).",
+    "aboutTitle": "Firma haqida",
+    "aboutText": "Rising Chemicals — sanoat kimyosi sohasida ishonchli yetkazib beruvchi. Biz mijozlarimizga sifatli mahsulotlarni qulay narxlarda va aniq texnik ma'lumotlar bilan taqdim etamiz.",
+    "topProductsTitle": "Ko'p sotiladigan mahsulotlar",
+    "noTopProducts": "Hozircha top mahsulotlar belgilanmagan."
+  },
+  "products": {
+    "catalog": "Katalog",
+    "all": "Barchasi",
+    "title": "Mahsulotlar",
+    "noProducts": "Bu kategoriyada mahsulot topilmadi.",
+    "addToCart": "Savatchaga qo'shish"
+  },
+  "cart": {
+    "title": "Savatcha",
+    "empty": "Savatcha bo'sh.",
+    "total": "Jami: {{amount}} so'm",
+    "checkout": "Buyurtma berish",
+    "formTitle": "Ma'lumotlaringizni kiriting",
+    "fullName": "F.I.O",
+    "phone": "Telefon raqam",
+    "email": "Email (ixtiyoriy)",
+    "comment": "Izoh (ixtiyoriy)",
+    "submit": "Zayavkani yuborish",
+    "submitting": "Yuborilmoqda...",
+    "successTitle": "Zayavkangiz qabul qilindi!",
+    "successText": "Tez orada mutaxassisimiz siz bilan bog'lanadi.",
+    "errorAlert": "Xatolik yuz berdi. Qaytadan urinib ko'ring."
+  },
+  "contact": {
+    "title": "Aloqa",
+    "addressTitle": "Manzil",
+    "addressValue": "Toshkent shahri, ...",
+    "phoneTitle": "Telefon",
+    "emailTitle": "Email",
+    "socialTitle": "Ijtimoiy tarmoqlar",
+    "mapPlaceholder": "Xarita shu yerda ko'rsatiladi"
+  },
+  "common": {
+    "currency": "so'm"
+  },
+  "admin": {
+    "layout": {
+      "brand": "ADMIN",
+      "dashboard": "Dashboard",
+      "products": "Mahsulotlar",
+      "categories": "Kategoriyalar",
+      "orders": "Zayavkalar",
+      "stats": "Statistika",
+      "logout": "Chiqish",
+      "loading": "Yuklanmoqda..."
+    },
+    "login": {
+      "brand": "ADMIN",
+      "error": "Email yoki parol noto'g'ri.",
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Parol",
+      "submit": "Kirish",
+      "submitting": "Kirilmoqda..."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "products": "Mahsulotlar",
+      "totalOrders": "Jami zayavkalar",
+      "customers": "Mijozlar",
+      "newOrders": "Yangi zayavkalar"
+    },
+    "products": {
+      "title": "Mahsulotlar",
+      "add": "Mahsulot qo'shish",
+      "cancel": "Bekor qilish",
+      "namePlaceholder": "Mahsulot nomi ({{locale}})",
+      "selectCategory": "Kategoriya tanlang",
+      "selectBrand": "Brend tanlang",
+      "price": "Narxi (so'm)",
+      "quantity": "Soni (ombordagi)",
+      "imageLabel": "Mahsulot rasmi",
+      "chooseImage": "Rasm tanlash",
+      "changeImage": "Rasmni almashtirish",
+      "removeImage": "Rasmni olib tashlash",
+      "uploading": "Yuklanmoqda...",
+      "uploadError": "Rasmni yuklashda xatolik yuz berdi.",
+      "descriptionTitle": "Tavsif ({{locale}})",
+      "descriptionPlaceholder": "Tavsif",
+      "techParamsTitle": "Texnik parametrlar ({{locale}})",
+      "techParamName": "Nomi (masalan: Zichligi)",
+      "techParamValue": "Qiymati (masalan: 1.2 g/cm3)",
+      "addParam": "+ Parametr qo'shish",
+      "isTop": "Home page'da \"Top mahsulot\" sifatida ko'rsatish",
+      "save": "Saqlash",
+      "submitAdd": "Qo'shish",
+      "tableName": "Nomi",
+      "tablePrice": "Narxi",
+      "tableQuantity": "Soni",
+      "tableTop": "Top",
+      "confirmDelete": "Mahsulotni o'chirishga ishonchingiz komilmi?"
+    },
+    "categories": {
+      "title": "Kategoriyalar",
+      "add": "Kategoriya qo'shish",
+      "cancel": "Bekor qilish",
+      "nameUz": "Nomi (UZ)",
+      "nameRu": "Nomi (RU)",
+      "nameEn": "Nomi (EN)",
+      "noParent": "Asosiy kategoriya (ota yo'q)",
+      "save": "Saqlash",
+      "submitAdd": "Qo'shish",
+      "noCategories": "Hozircha kategoriya qo'shilmagan.",
+      "confirmDelete": "Kategoriyani o'chirishga ishonchingiz komilmi? Bog'liq subkategoriyalar ham o'chadi."
+    },
+    "orders": {
+      "title": "Zayavkalar",
+      "customer": "Mijoz",
+      "phone": "Telefon",
+      "amount": "Summa",
+      "date": "Sana",
+      "status": "Status",
+      "telegram": "Telegram",
+      "statusNew": "Yangi",
+      "statusProcessing": "Ko'rib chiqilmoqda",
+      "statusCompleted": "Bajarildi",
+      "statusCancelled": "Bekor qilindi"
+    },
+    "stats": {
+      "title": "Statistika",
+      "note": "Faqat \"Bajarildi\" statusidagi buyurtmalar hisoblanadi.",
+      "product": "Mahsulot",
+      "soldQty": "Sotilgan soni",
+      "totalAmount": "Jami summa",
+      "ordersCount": "Buyurtmalar soni",
+      "noData": "Hozircha ma'lumot yo'q."
+    }
+  }
+}

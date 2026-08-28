@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ===== LIGHT TEMA (default) ===== */
+  :root {
+    --background: 0 0% 100%;          /* oq fon */
+    --foreground: 210 60% 15%;        /* to'q navy matn */
+
+    --card: 0 0% 100%;
+    --card-foreground: 210 60% 15%;
+
+    --primary: 205 74% 26%;           /* brand navy #0F4C75 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 165 71% 42%;         /* brand teal #1AC29B */
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 165 71% 95%;
+    --accent-foreground: 205 74% 26%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 210 15% 45%;
+
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 165 71% 42%;
+
+    --radius: 0.6rem;
+  }
+
+  /* ===== DARK TEMA ===== */
+  .dark {
+    --background: 210 45% 8%;         /* to'q ko'k-qora fon */
+    --foreground: 0 0% 96%;
+
+    --card: 210 40% 11%;
+    --card-foreground: 0 0% 96%;
+
+    --primary: 165 71% 42%;           /* dark temada teal aksent bo'ladi */
+    --primary-foreground: 210 45% 8%;
+
+    --secondary: 205 74% 26%;
+    --secondary-foreground: 0 0% 96%;
+
+    --accent: 210 40% 16%;
+    --accent-foreground: 165 71% 55%;
+
+    --muted: 210 35% 15%;
+    --muted-foreground: 210 15% 65%;
+
+    --border: 210 30% 18%;
+    --input: 210 30% 18%;
+    --ring: 165 71% 42%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+  }
+}

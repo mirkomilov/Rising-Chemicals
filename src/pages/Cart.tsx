@@ -1,0 +1,199 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useCartStore } from "@/store/cartStore";
+import { useLanguageStore } from "@/store/languageStore";
+import { productName } from "@/lib/i18n";
+import { supabase } from "@/lib/supabaseClient";
+import { Minus, Plus, Trash2 } from "lucide-react";
+
+export default function Cart() {
+  const { t } = useTranslation();
+  const { items, updateQuantity, removeItem, clearCart, totalAmount } =
+    useCartStore();
+  const language = useLanguageStore((s) => s.language);
+  const [showForm, setShowForm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [form, setForm] = useState({ full_name: "", phone: "", email: "", comment: "" });
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (items.length === 0) return;
+    setSubmitting(true);
+
+    try {
+      // 1. Mijozni yaratamiz
+      const { data: customer, error: custErr } = await supabase
+        .from("customers")
+        .insert({
+          full_name: form.full_name,
+          phone: form.phone,
+          email: form.email || null,
+        })
+        .select()
+        .single();
+      if (custErr) throw custErr;
+
+      // 2. Buyurtmani yaratamiz
+      const { data: order, error: orderErr } = await supabase
+        .from("orders")
+        .insert({
+          customer_id: customer.id,
+          total_amount: totalAmount(),
+          comment: form.comment || null,
+        })
+        .select()
+        .single();
+      if (orderErr) throw orderErr;
+
+      // 3. Buyurtma tarkibidagi mahsulotlarni saqlaymiz
+      const orderItems = items.map((i) => ({
+        order_id: order.id,
+        product_id: i.product.id,
+        quantity: i.quantity,
+        price_at_order: i.product.price,
+      }));
+      const { error: itemsErr } = await supabase
+        .from("order_items")
+        .insert(orderItems);
+      if (itemsErr) throw itemsErr;
+
+      // Telegram botga xabar yuborish — Supabase Database Webhook orqali
+      // avtomatik ishlaydi (orders jadvaliga INSERT bo'lganda Edge Function chaqiriladi).
+      // Frontendda qo'shimcha kod yozish shart emas.
+
+      clearCart();
+      setSuccess(true);
+    } catch (err) {
+      console.error(err);
+      alert(t("cart.errorAlert"));
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-24 text-center">
+        <h2 className="text-2xl font-bold text-primary">{t("cart.successTitle")}</h2>
+        <p className="mt-2 text-muted-foreground">{t("cart.successText")}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-4xl px-4 py-8">
+      <h2 className="mb-6 text-xl font-semibold">{t("cart.title")}</h2>
+
+      {items.length === 0 ? (
+        <p className="text-muted-foreground">{t("cart.empty")}</p>
+      ) : (
+        <>
+          <div className="space-y-3">
+            {items.map(({ product, quantity }) => (
+              <div
+                key={product.id}
+                className="flex items-center gap-4 rounded-lg border border-border bg-card p-3"
+              >
+                <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
+                  {product.image_url && (
+                    <img
+                      src={product.image_url}
+                      alt={productName(product, language)}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+                <div className="flex-1">
+                  <p className="font-medium">{productName(product, language)}</p>
+                  <p className="text-sm text-primary">
+                    {product.price.toLocaleString()} {t("common.currency")}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => updateQuantity(product.id, Math.max(1, quantity - 1))}
+                    className="rounded-md border border-border p-1 hover:bg-muted"
+                  >
+                    <Minus className="h-3.5 w-3.5" />
+                  </button>
+                  <span className="w-6 text-center text-sm">{quantity}</span>
+                  <button
+                    onClick={() => updateQuantity(product.id, quantity + 1)}
+                    className="rounded-md border border-border p-1 hover:bg-muted"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+                <button
+                  onClick={() => removeItem(product.id)}
+                  className="p-2 text-muted-foreground hover:text-destructive"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
+            <span className="text-lg font-semibold">
+              {t("cart.total", { amount: totalAmount().toLocaleString() })}
+            </span>
+            {!showForm && (
+              <button
+                onClick={() => setShowForm(true)}
+                className="rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground hover:opacity-90"
+              >
+                {t("cart.checkout")}
+              </button>
+            )}
+          </div>
+
+          {showForm && (
+            <form
+              onSubmit={handleSubmit}
+              className="mt-6 space-y-4 rounded-lg border border-border bg-card p-5"
+            >
+              <h3 className="font-semibold">{t("cart.formTitle")}</h3>
+              <input
+                required
+                placeholder={t("cart.fullName")}
+                value={form.full_name}
+                onChange={(e) => setForm({ ...form, full_name: e.target.value })}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              />
+              <input
+                required
+                placeholder={t("cart.phone")}
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              />
+              <input
+                type="email"
+                placeholder={t("cart.email")}
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              />
+              <textarea
+                placeholder={t("cart.comment")}
+                value={form.comment}
+                onChange={(e) => setForm({ ...form, comment: e.target.value })}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                rows={3}
+              />
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground hover:opacity-90 disabled:opacity-50"
+              >
+                {submitting ? t("cart.submitting") : t("cart.submit")}
+              </button>
+            </form>
+          )}
+        </>
+      )}
+    </div>
+  );
+}

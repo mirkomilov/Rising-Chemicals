@@ -1,0 +1,156 @@
+{
+  "header": {
+    "home": "Главная",
+    "products": "Продукция",
+    "contact": "Контакты",
+    "cart": "Корзина",
+    "toggleTheme": "Переключить тему",
+    "toggleLanguage": "Сменить язык"
+  },
+  "footer": {
+    "tagline": "Качественная химическая продукция — по надёжным ценам и с точными техническими характеристиками.",
+    "contactTitle": "Контакты",
+    "phone": "Тел: +998 XX XXX XX XX",
+    "email": "Email: info@risingchemicals.uz",
+    "address": "Адрес: г. Ташкент",
+    "socialTitle": "Соцсети",
+    "rights": "© {{year}} Rising Chemicals. Все права защищены."
+  },
+  "home": {
+    "heroTitle": "Rising Chemicals",
+    "heroSubtitle": "Качественная химическая продукция для промышленности и лабораторий — с ценами и техническими параметрами.",
+    "partnersTitle": "Партнёрские бренды",
+    "noPartners": "Пока бренды не добавлены (добавляются через админ-панель).",
+    "aboutTitle": "О компании",
+    "aboutText": "Rising Chemicals — надёжный поставщик в сфере промышленной химии. Мы предлагаем клиентам качественную продукцию по доступным ценам с точными техническими данными.",
+    "topProductsTitle": "Популярные товары",
+    "noTopProducts": "Пока топ-товары не отмечены."
+  },
+  "products": {
+    "catalog": "Каталог",
+    "all": "Все",
+    "title": "Продукция",
+    "noProducts": "В этой категории товары не найдены.",
+    "addToCart": "Добавить в корзину"
+  },
+  "cart": {
+    "title": "Корзина",
+    "empty": "Корзина пуста.",
+    "total": "Итого: {{amount}} сум",
+    "checkout": "Оформить заказ",
+    "formTitle": "Введите свои данные",
+    "fullName": "Ф.И.О",
+    "phone": "Номер телефона",
+    "email": "Email (необязательно)",
+    "comment": "Комментарий (необязательно)",
+    "submit": "Отправить заявку",
+    "submitting": "Отправка...",
+    "successTitle": "Ваша заявка принята!",
+    "successText": "Скоро наш специалист свяжется с вами.",
+    "errorAlert": "Произошла ошибка. Попробуйте ещё раз."
+  },
+  "contact": {
+    "title": "Контакты",
+    "addressTitle": "Адрес",
+    "addressValue": "г. Ташкент, ...",
+    "phoneTitle": "Телефон",
+    "emailTitle": "Email",
+    "socialTitle": "Соцсети",
+    "mapPlaceholder": "Здесь будет отображаться карта"
+  },
+  "common": {
+    "currency": "сум"
+  },
+  "admin": {
+    "layout": {
+      "brand": "АДМИН",
+      "dashboard": "Дашборд",
+      "products": "Товары",
+      "categories": "Категории",
+      "orders": "Заявки",
+      "stats": "Статистика",
+      "logout": "Выйти",
+      "loading": "Загрузка..."
+    },
+    "login": {
+      "brand": "АДМИН",
+      "error": "Неверный email или пароль.",
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Пароль",
+      "submit": "Войти",
+      "submitting": "Вход..."
+    },
+    "dashboard": {
+      "title": "Дашборд",
+      "products": "Товары",
+      "totalOrders": "Всего заявок",
+      "customers": "Клиенты",
+      "newOrders": "Новые заявки"
+    },
+    "products": {
+      "title": "Товары",
+      "add": "Добавить товар",
+      "cancel": "Отмена",
+      "namePlaceholder": "Название товара ({{locale}})",
+      "selectCategory": "Выберите категорию",
+      "selectBrand": "Выберите бренд",
+      "price": "Цена (сум)",
+      "quantity": "Количество (на складе)",
+      "imageLabel": "Изображение товара",
+      "chooseImage": "Выбрать изображение",
+      "changeImage": "Заменить изображение",
+      "removeImage": "Удалить изображение",
+      "uploading": "Загрузка...",
+      "uploadError": "Ошибка при загрузке изображения.",
+      "descriptionTitle": "Описание ({{locale}})",
+      "descriptionPlaceholder": "Описание",
+      "techParamsTitle": "Технические параметры ({{locale}})",
+      "techParamName": "Название (например: Плотность)",
+      "techParamValue": "Значение (например: 1.2 г/см3)",
+      "addParam": "+ Добавить параметр",
+      "isTop": "Показывать на главной как «Топ товар»",
+      "save": "Сохранить",
+      "submitAdd": "Добавить",
+      "tableName": "Название",
+      "tablePrice": "Цена",
+      "tableQuantity": "Количество",
+      "tableTop": "Топ",
+      "confirmDelete": "Вы уверены, что хотите удалить товар?"
+    },
+    "categories": {
+      "title": "Категории",
+      "add": "Добавить категорию",
+      "cancel": "Отмена",
+      "nameUz": "Название (UZ)",
+      "nameRu": "Название (RU)",
+      "nameEn": "Название (EN)",
+      "noParent": "Основная категория (без родителя)",
+      "save": "Сохранить",
+      "submitAdd": "Добавить",
+      "noCategories": "Пока категории не добавлены.",
+      "confirmDelete": "Вы уверены, что хотите удалить категорию? Связанные подкатегории тоже будут удалены."
+    },
+    "orders": {
+      "title": "Заявки",
+      "customer": "Клиент",
+      "phone": "Телефон",
+      "amount": "Сумма",
+      "date": "Дата",
+      "status": "Статус",
+      "telegram": "Telegram",
+      "statusNew": "Новый",
+      "statusProcessing": "В обработке",
+      "statusCompleted": "Выполнен",
+      "statusCancelled": "Отменён"
+    },
+    "stats": {
+      "title": "Статистика",
+      "note": "Учитываются только заказы со статусом «Выполнен».",
+      "product": "Товар",
+      "soldQty": "Продано, шт",
+      "totalAmount": "Общая сумма",
+      "ordersCount": "Кол-во заказов",
+      "noData": "Пока данных нет."
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "header": {
+    "home": "Home",
+    "products": "Products",
+    "contact": "Contact",
+    "cart": "Cart",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Change language"
+  },
+  "footer": {
+    "tagline": "Quality chemical products — at reliable prices with precise technical specifications.",
+    "contactTitle": "Contact",
+    "phone": "Phone: +998 XX XXX XX XX",
+    "email": "Email: info@risingchemicals.uz",
+    "address": "Address: Tashkent",
+    "socialTitle": "Social media",
+    "rights": "© {{year}} Rising Chemicals. All rights reserved."
+  },
+  "home": {
+    "heroTitle": "Rising Chemicals",
+    "heroSubtitle": "Quality chemical products for industry and laboratories — with prices and technical parameters.",
+    "partnersTitle": "Partner brands",
+    "noPartners": "No brands added yet (added via the admin panel).",
+    "aboutTitle": "About us",
+    "aboutText": "Rising Chemicals is a trusted supplier in the industrial chemistry field. We offer our customers quality products at affordable prices with accurate technical data.",
+    "topProductsTitle": "Best-selling products",
+    "noTopProducts": "No top products marked yet."
+  },
+  "products": {
+    "catalog": "Catalog",
+    "all": "All",
+    "title": "Products",
+    "noProducts": "No products found in this category.",
+    "addToCart": "Add to cart"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "total": "Total: {{amount}} UZS",
+    "checkout": "Place order",
+    "formTitle": "Enter your details",
+    "fullName": "Full name",
+    "phone": "Phone number",
+    "email": "Email (optional)",
+    "comment": "Comment (optional)",
+    "submit": "Submit request",
+    "submitting": "Submitting...",
+    "successTitle": "Your request has been accepted!",
+    "successText": "Our specialist will contact you shortly.",
+    "errorAlert": "An error occurred. Please try again."
+  },
+  "contact": {
+    "title": "Contact",
+    "addressTitle": "Address",
+    "addressValue": "Tashkent city, ...",
+    "phoneTitle": "Phone",
+    "emailTitle": "Email",
+    "socialTitle": "Social media",
+    "mapPlaceholder": "The map will be displayed here"
+  },
+  "common": {
+    "currency": "UZS"
+  },
+  "admin": {
+    "layout": {
+      "brand": "ADMIN",
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "categories": "Categories",
+      "orders": "Orders",
+      "stats": "Statistics",
+      "logout": "Log out",
+      "loading": "Loading..."
+    },
+    "login": {
+      "brand": "ADMIN",
+      "error": "Incorrect email or password.",
+      "emailPlaceholder": "Email",
+      "passwordPlaceholder": "Password",
+      "submit": "Log in",
+      "submitting": "Logging in..."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "products": "Products",
+      "totalOrders": "Total orders",
+      "customers": "Customers",
+      "newOrders": "New orders"
+    },
+    "products": {
+      "title": "Products",
+      "add": "Add product",
+      "cancel": "Cancel",
+      "namePlaceholder": "Product name ({{locale}})",
+      "selectCategory": "Select category",
+      "selectBrand": "Select brand",
+      "price": "Price (UZS)",
+      "quantity": "Quantity (in stock)",
+      "imageLabel": "Product image",
+      "chooseImage": "Choose image",
+      "changeImage": "Change image",
+      "removeImage": "Remove image",
+      "uploading": "Uploading...",
+      "uploadError": "An error occurred while uploading the image.",
+      "descriptionTitle": "Description ({{locale}})",
+      "descriptionPlaceholder": "Description",
+      "techParamsTitle": "Technical parameters ({{locale}})",
+      "techParamName": "Name (e.g. Density)",
+      "techParamValue": "Value (e.g. 1.2 g/cm3)",
+      "addParam": "+ Add parameter",
+      "isTop": "Show on homepage as \"Top product\"",
+      "save": "Save",
+      "submitAdd": "Add",
+      "tableName": "Name",
+      "tablePrice": "Price",
+      "tableQuantity": "Quantity",
+      "tableTop": "Top",
+      "confirmDelete": "Are you sure you want to delete this product?"
+    },
+    "categories": {
+      "title": "Categories",
+      "add": "Add category",
+      "cancel": "Cancel",
+      "nameUz": "Name (UZ)",
+      "nameRu": "Name (RU)",
+      "nameEn": "Name (EN)",
+      "noParent": "Root category (no parent)",
+      "save": "Save",
+      "submitAdd": "Add",
+      "noCategories": "No categories added yet.",
+      "confirmDelete": "Are you sure you want to delete this category? Related subcategories will also be deleted."
+    },
+    "orders": {
+      "title": "Orders",
+      "customer": "Customer",
+      "phone": "Phone",
+      "amount": "Amount",
+      "date": "Date",
+      "status": "Status",
+      "telegram": "Telegram",
+      "statusNew": "New",
+      "statusProcessing": "Processing",
+      "statusCompleted": "Completed",
+      "statusCancelled": "Cancelled"
+    },
+    "stats": {
+      "title": "Statistics",
+      "note": "Only orders with \"Completed\" status are counted.",
+      "product": "Product",
+      "soldQty": "Units sold",
+      "totalAmount": "Total amount",
+      "ordersCount": "Orders count",
+      "noData": "No data yet."
+    }
+  }
+}
