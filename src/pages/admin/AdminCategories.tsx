@@ -2,21 +2,33 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
 import type { Category } from "@/types/database.types";
+import { useLanguageStore } from "@/store/languageStore";
 import {
   categoryDisplayName,
   collectSelfAndDescendantIds,
   flattenCategoryTree,
 } from "@/lib/categoryTree";
-import { Plus, Trash2, Pencil, FolderPlus } from "lucide-react";
+import { Plus, Trash2, Pencil, FolderPlus, ChevronRight, ChevronDown } from "lucide-react";
 
 const emptyForm = { name_uz: "", name_ru: "", name_en: "", parent_id: "" };
 
 export default function AdminCategories() {
   const { t } = useTranslation();
+  const language = useLanguageStore((s) => s.language);
   const [categories, setCategories] = useState<Category[]>([]);
   const [form, setForm] = useState(emptyForm);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+
+  function toggleExpand(id: string) {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   async function load() {
     const { data } = await supabase.from("categories").select("*").order("created_at");
@@ -90,27 +102,38 @@ export default function AdminCategories() {
   const excludeIds = editingId
     ? collectSelfAndDescendantIds(categories, editingId)
     : new Set<string>();
-  const categoryOptions = flattenCategoryTree(categories, excludeIds);
+  const categoryOptions = flattenCategoryTree(categories, language, excludeIds);
 
   const rootCategories = categories.filter((c) => !c.parent_id);
   const childrenOf = (id: string) => categories.filter((c) => c.parent_id === id);
 
   function renderCategoryRow(c: Category, depth: number) {
     const children = childrenOf(c.id);
+    const isExpanded = expandedIds.has(c.id);
     return (
       <div key={c.id}>
         <div
           style={{ paddingLeft: `${depth * 1.25}rem` }}
           className="flex items-center justify-between border-t border-border py-2.5 first:border-t-0"
         >
-          <div>
-            <span className="font-medium">
-              {depth > 0 && <span className="text-muted-foreground">— </span>}
-              {categoryDisplayName(c)}
-            </span>
-            <span className="ml-2 text-xs text-muted-foreground">
-              UZ: {c.name_uz || "—"} · EN: {c.name_en || "—"}
-            </span>
+          <div className="flex items-center gap-1">
+            {children.length > 0 ? (
+              <button
+                type="button"
+                onClick={() => toggleExpand(c.id)}
+                aria-label={isExpanded ? t("admin.categories.collapse") : t("admin.categories.expand")}
+                className="p-1 text-muted-foreground hover:text-foreground"
+              >
+                {isExpanded ? (
+                  <ChevronDown className="h-4 w-4" />
+                ) : (
+                  <ChevronRight className="h-4 w-4" />
+                )}
+              </button>
+            ) : (
+              <span className="w-6" />
+            )}
+            <span className="font-medium">{categoryDisplayName(c, language)}</span>
           </div>
           <div className="flex shrink-0 gap-2">
             <button
@@ -129,7 +152,7 @@ export default function AdminCategories() {
             </button>
           </div>
         </div>
-        {children.map((child) => renderCategoryRow(child, depth + 1))}
+        {isExpanded && children.map((child) => renderCategoryRow(child, depth + 1))}
       </div>
     );
   }
@@ -158,7 +181,9 @@ export default function AdminCategories() {
               return (
                 parent && (
                   <p className="rounded-md bg-muted px-3 py-2 text-sm text-muted-foreground">
-                    {t("admin.categories.addingSubTo", { name: categoryDisplayName(parent) })}
+                    {t("admin.categories.addingSubTo", {
+                      name: categoryDisplayName(parent, language),
+                    })}
                   </p>
                 )
               );

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { ChevronRight, ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import type { CategoryTreeNode, Product } from "@/types/database.types";
 import { useCartStore } from "@/store/cartStore";
@@ -12,8 +13,18 @@ export default function Products() {
   const [categories, setCategories] = useState<CategoryTreeNode[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const addItem = useCartStore((s) => s.addItem);
   const language = useLanguageStore((s) => s.language);
+
+  function toggleExpand(id: string) {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   useEffect(() => {
     supabase
@@ -35,22 +46,50 @@ export default function Products() {
 
   function renderCategoryNode(node: CategoryTreeNode) {
     const children = childrenOf(node.id);
+    const isExpanded = expandedIds.has(node.id);
     return (
       <div key={node.id} className="mt-1">
-        <button
-          onClick={() => setActiveCategory(node.id)}
-          style={{ paddingLeft: `${0.75 + node.depth * 0.75}rem` }}
+        <div
           className={cn(
-            "block w-full rounded-md py-2 pr-3 text-left text-sm",
-            node.depth === 0 ? "font-medium" : "",
+            "flex items-center rounded-md pr-3",
             activeCategory === node.id
               ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:bg-muted"
           )}
         >
-          {node.name}
-        </button>
-        {children.map((child) => renderCategoryNode(child))}
+          {children.length > 0 ? (
+            <button
+              type="button"
+              onClick={() => toggleExpand(node.id)}
+              style={{ marginLeft: `${node.depth * 0.75}rem` }}
+              aria-label={isExpanded ? t("products.collapse") : t("products.expand")}
+              className="p-2"
+            >
+              {isExpanded ? (
+                <ChevronDown className="h-3.5 w-3.5" />
+              ) : (
+                <ChevronRight className="h-3.5 w-3.5" />
+              )}
+            </button>
+          ) : (
+            <span style={{ marginLeft: `${node.depth * 0.75}rem` }} className="w-[26px]" />
+          )}
+          <button
+            onClick={() => {
+              setActiveCategory(node.id);
+              if (children.length > 0) {
+                setExpandedIds((prev) => new Set(prev).add(node.id));
+              }
+            }}
+            className={cn(
+              "flex-1 py-2 pr-1 text-left text-sm",
+              node.depth === 0 ? "font-medium" : ""
+            )}
+          >
+            {node.name}
+          </button>
+        </div>
+        {isExpanded && children.map((child) => renderCategoryNode(child))}
       </div>
     );
   }

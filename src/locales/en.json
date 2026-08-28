@@ -31,7 +31,9 @@
     "all": "All",
     "title": "Products",
     "noProducts": "No products found in this category.",
-    "addToCart": "Add to cart"
+    "addToCart": "Add to cart",
+    "expand": "Expand",
+    "collapse": "Collapse"
   },
   "cart": {
     "title": "Cart",
@@ -93,6 +95,7 @@
       "cancel": "Cancel",
       "namePlaceholder": "Product name ({{locale}})",
       "selectCategory": "Select category",
+      "noSubcategory": "No subcategory (stay at this level)",
       "selectBrand": "Select brand",
       "price": "Price (UZS)",
       "quantity": "Quantity (in stock)",
@@ -125,6 +128,8 @@
       "nameRu": "Name (RU)",
       "nameEn": "Name (EN)",
       "noParent": "Root category (no parent)",
+      "expand": "Expand",
+      "collapse": "Collapse",
       "addSub": "Add subcategory",
       "addingSubTo": "Adding a subcategory to \"{{name}}\"",
       "save": "Save",

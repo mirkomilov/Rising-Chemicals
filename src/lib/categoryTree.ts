@@ -1,4 +1,4 @@
-import type { Category } from "@/types/database.types";
+import type { Category, Locale } from "@/types/database.types";
 
 export interface FlatCategoryOption {
   id: string;
@@ -6,10 +6,10 @@ export interface FlatCategoryOption {
   label: string;
 }
 
-// Admin panelda kategoriya nomini ko'rsatish uchun: name_ru asosiy, bo'lmasa
-// name_uz, bo'lmasa name_en (backenddagi COALESCE fallback mantig'iga mos).
-export function categoryDisplayName(c: Category): string {
-  return c.name_ru || c.name_uz || c.name_en || "(nomsiz)";
+// Kategoriya nomini berilgan tilda ko'rsatadi, bo'lmasa RU/UZ/EN tartibida
+// fallback qiladi (backenddagi COALESCE fallback mantig'iga mos).
+export function categoryDisplayName(c: Category, locale: Locale = "ru"): string {
+  return c[`name_${locale}`] || c.name_ru || c.name_uz || c.name_en || "(nomsiz)";
 }
 
 // categories jadvalidagi flat (parent_id orqali bog'langan) qatorlarni
@@ -17,6 +17,7 @@ export function categoryDisplayName(c: Category): string {
 // aylantiradi — dropdown yoki indentli ro'yxat chizish uchun qulay.
 export function flattenCategoryTree(
   categories: Category[],
+  locale: Locale,
   excludeIds: Set<string> = new Set()
 ): FlatCategoryOption[] {
   const childrenOf = (parentId: string | null) =>
@@ -27,7 +28,7 @@ export function flattenCategoryTree(
   const result: FlatCategoryOption[] = [];
   function walk(parentId: string | null, depth: number) {
     for (const c of childrenOf(parentId)) {
-      result.push({ id: c.id, depth, label: categoryDisplayName(c) });
+      result.push({ id: c.id, depth, label: categoryDisplayName(c, locale) });
       walk(c.id, depth + 1);
     }
   }
@@ -54,4 +55,18 @@ export function collectSelfAndDescendantIds(
     }
   }
   return ids;
+}
+
+// Berilgan kategoriyadan tomirgacha (root) bo'lgan yo'lni id'lar ro'yxati
+// sifatida qaytaradi ([root, ..., categoryId]). Bosqichma-bosqich
+// (cascading) kategoriya tanlovini oldindan to'ldirish uchun ishlatiladi.
+export function categoryPathIds(categories: Category[], id: string | null): string[] {
+  const path: string[] = [];
+  let current = id ? categories.find((c) => c.id === id) : undefined;
+  while (current) {
+    path.unshift(current.id);
+    const parentId: string | null = current.parent_id;
+    current = parentId ? categories.find((c) => c.id === parentId) : undefined;
+  }
+  return path;
 }

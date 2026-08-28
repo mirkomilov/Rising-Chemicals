@@ -31,7 +31,9 @@
     "all": "Barchasi",
     "title": "Mahsulotlar",
     "noProducts": "Bu kategoriyada mahsulot topilmadi.",
-    "addToCart": "Savatchaga qo'shish"
+    "addToCart": "Savatchaga qo'shish",
+    "expand": "Ochish",
+    "collapse": "Yopish"
   },
   "cart": {
     "title": "Savatcha",
@@ -93,6 +95,7 @@
       "cancel": "Bekor qilish",
       "namePlaceholder": "Mahsulot nomi ({{locale}})",
       "selectCategory": "Kategoriya tanlang",
+      "noSubcategory": "Subkategoriyasiz (shu darajada qoldirish)",
       "selectBrand": "Brend tanlang",
       "price": "Narxi (so'm)",
       "quantity": "Soni (ombordagi)",
@@ -125,6 +128,8 @@
       "nameRu": "Nomi (RU)",
       "nameEn": "Nomi (EN)",
       "noParent": "Asosiy kategoriya (ota yo'q)",
+      "expand": "Ochish",
+      "collapse": "Yopish",
       "addSub": "Subkategoriya qo'shish",
       "addingSubTo": "\"{{name}}\" ichiga subkategoriya qo'shilmoqda",
       "save": "Saqlash",
