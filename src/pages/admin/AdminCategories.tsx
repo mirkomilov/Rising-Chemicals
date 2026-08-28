@@ -7,7 +7,7 @@ import {
   collectSelfAndDescendantIds,
   flattenCategoryTree,
 } from "@/lib/categoryTree";
-import { Plus, Trash2, Pencil } from "lucide-react";
+import { Plus, Trash2, Pencil, FolderPlus } from "lucide-react";
 
 const emptyForm = { name_uz: "", name_ru: "", name_en: "", parent_id: "" };
 
@@ -41,6 +41,12 @@ export default function AdminCategories() {
       parent_id: c.parent_id ?? "",
     });
     setEditingId(c.id);
+    setShowForm(true);
+  }
+
+  function startAddSub(parentId: string) {
+    setForm({ ...emptyForm, parent_id: parentId });
+    setEditingId(null);
     setShowForm(true);
   }
 
@@ -107,6 +113,14 @@ export default function AdminCategories() {
             </span>
           </div>
           <div className="flex shrink-0 gap-2">
+            <button
+              onClick={() => startAddSub(c.id)}
+              aria-label={t("admin.categories.addSub")}
+              title={t("admin.categories.addSub")}
+              className="text-secondary hover:opacity-70"
+            >
+              <FolderPlus className="h-4 w-4" />
+            </button>
             <button onClick={() => startEdit(c)} className="text-primary hover:opacity-70">
               <Pencil className="h-4 w-4" />
             </button>
@@ -138,6 +152,18 @@ export default function AdminCategories() {
           onSubmit={handleSubmit}
           className="mb-8 space-y-4 rounded-lg border border-border bg-card p-5"
         >
+          {!editingId &&
+            (() => {
+              const parent = categories.find((c) => c.id === form.parent_id);
+              return (
+                parent && (
+                  <p className="rounded-md bg-muted px-3 py-2 text-sm text-muted-foreground">
+                    {t("admin.categories.addingSubTo", { name: categoryDisplayName(parent) })}
+                  </p>
+                )
+              );
+            })()}
+
           <div className="grid gap-3 sm:grid-cols-3">
             <input
               placeholder={t("admin.categories.nameUz")}

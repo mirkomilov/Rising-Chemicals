@@ -125,6 +125,8 @@
       "nameRu": "Name (RU)",
       "nameEn": "Name (EN)",
       "noParent": "Root category (no parent)",
+      "addSub": "Add subcategory",
+      "addingSubTo": "Adding a subcategory to \"{{name}}\"",
       "save": "Save",
       "submitAdd": "Add",
       "noCategories": "No categories added yet.",

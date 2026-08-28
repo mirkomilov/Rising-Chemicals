@@ -125,6 +125,8 @@
       "nameRu": "Nomi (RU)",
       "nameEn": "Nomi (EN)",
       "noParent": "Asosiy kategoriya (ota yo'q)",
+      "addSub": "Subkategoriya qo'shish",
+      "addingSubTo": "\"{{name}}\" ichiga subkategoriya qo'shilmoqda",
       "save": "Saqlash",
       "submitAdd": "Qo'shish",
       "noCategories": "Hozircha kategoriya qo'shilmagan.",
