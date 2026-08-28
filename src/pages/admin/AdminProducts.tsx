@@ -212,7 +212,8 @@ export default function AdminProducts() {
       setForm((f) => ({ ...f, image_url: data.publicUrl }));
     } catch (err) {
       console.error(err);
-      alert(t("admin.products.uploadError"));
+      const message = err instanceof Error ? err.message : String(err);
+      alert(`${t("admin.products.uploadError")}\n\n${message}`);
     } finally {
       setUploadingImage(false);
     }
