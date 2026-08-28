@@ -140,7 +140,6 @@ export default function AdminCategories() {
         >
           <div className="grid gap-3 sm:grid-cols-3">
             <input
-              required
               placeholder={t("admin.categories.nameUz")}
               value={form.name_uz}
               onChange={(e) => setForm({ ...form, name_uz: e.target.value })}
@@ -154,7 +153,6 @@ export default function AdminCategories() {
               className="rounded-md border border-input bg-background px-3 py-2 text-sm"
             />
             <input
-              required
               placeholder={t("admin.categories.nameEn")}
               value={form.name_en}
               onChange={(e) => setForm({ ...form, name_en: e.target.value })}
