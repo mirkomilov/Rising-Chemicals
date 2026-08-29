@@ -22,33 +22,35 @@ export default function Cart() {
     setSubmitting(true);
 
     try {
+      // ID'larni oldindan o'zimiz yaratamiz — shunda yozilgan qatorni
+      // "qaytarib o'qish" (RETURNING/select) shart emas, va anonim
+      // mijozlarga customers/orders jadvalidan o'qish huquqi berish
+      // kerak bo'lmaydi (bu boshqa mijozlarning shaxsiy ma'lumotlarini
+      // oshkor qilib qo'yishi mumkin edi).
+      const customerId = crypto.randomUUID();
+      const orderId = crypto.randomUUID();
+
       // 1. Mijozni yaratamiz
-      const { data: customer, error: custErr } = await supabase
-        .from("customers")
-        .insert({
-          full_name: form.full_name,
-          phone: form.phone,
-          email: form.email || null,
-        })
-        .select()
-        .single();
+      const { error: custErr } = await supabase.from("customers").insert({
+        id: customerId,
+        full_name: form.full_name,
+        phone: form.phone,
+        email: form.email || null,
+      });
       if (custErr) throw custErr;
 
       // 2. Buyurtmani yaratamiz
-      const { data: order, error: orderErr } = await supabase
-        .from("orders")
-        .insert({
-          customer_id: customer.id,
-          total_amount: totalAmount(),
-          comment: form.comment || null,
-        })
-        .select()
-        .single();
+      const { error: orderErr } = await supabase.from("orders").insert({
+        id: orderId,
+        customer_id: customerId,
+        total_amount: totalAmount(),
+        comment: form.comment || null,
+      });
       if (orderErr) throw orderErr;
 
       // 3. Buyurtma tarkibidagi mahsulotlarni saqlaymiz
       const orderItems = items.map((i) => ({
-        order_id: order.id,
+        order_id: orderId,
         product_id: i.product.id,
         quantity: i.quantity,
         price_at_order: i.product.price,
