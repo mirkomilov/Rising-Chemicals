@@ -5,27 +5,34 @@ import { supabase } from "@/lib/supabaseClient";
 import type { Brand, Product } from "@/types/database.types";
 import { useLanguageStore } from "@/store/languageStore";
 import { productName } from "@/lib/i18n";
+import PageLoader from "@/components/PageLoader";
 
 export default function Home() {
   const { t } = useTranslation();
   const [brands, setBrands] = useState<Brand[]>([]);
   const [topProducts, setTopProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const language = useLanguageStore((s) => s.language);
 
   useEffect(() => {
-    supabase
-      .from("brands")
-      .select("*")
-      .then(({ data }) => setBrands(data ?? []));
-
-    supabase
-      .from("products")
-      .select("*")
-      .eq("is_top", true)
-      .eq("is_active", true)
-      .limit(8)
-      .then(({ data }) => setTopProducts(data ?? []));
+    Promise.all([
+      supabase.from("brands").select("*"),
+      supabase
+        .from("products")
+        .select("*")
+        .eq("is_top", true)
+        .eq("is_active", true)
+        .limit(8),
+    ]).then(([brandsRes, productsRes]) => {
+      setBrands(brandsRes.data ?? []);
+      setTopProducts(productsRes.data ?? []);
+      setLoading(false);
+    });
   }, []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <div>

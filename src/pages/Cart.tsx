@@ -5,6 +5,7 @@ import { useLanguageStore } from "@/store/languageStore";
 import { productName } from "@/lib/i18n";
 import { supabase } from "@/lib/supabaseClient";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import AtomSpinner from "@/components/AtomSpinner";
 
 // Supabase'dan qaytadigan xatolar (PostgrestError, StorageError) doim ham
 // native Error emas — shuning uchun instanceof tekshiruvi ba'zida
@@ -203,8 +204,9 @@ export default function Cart() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground hover:opacity-90 disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground hover:opacity-90 disabled:opacity-50"
               >
+                {submitting && <AtomSpinner size={18} />}
                 {submitting ? t("cart.submitting") : t("cart.submit")}
               </button>
             </form>

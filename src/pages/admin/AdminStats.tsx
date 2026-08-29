@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
+import PageLoader from "@/components/PageLoader";
 
 interface SalesStat {
   product_id: string;
@@ -13,6 +14,7 @@ interface SalesStat {
 export default function AdminStats() {
   const { t } = useTranslation();
   const [stats, setStats] = useState<SalesStat[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // sales_stats — schema.sql da yaratilgan tayyor VIEW
@@ -21,8 +23,15 @@ export default function AdminStats() {
       .from("sales_stats")
       .select("*")
       .order("total_sold_qty", { ascending: false })
-      .then(({ data }) => setStats((data as SalesStat[]) ?? []));
+      .then(({ data }) => {
+        setStats((data as SalesStat[]) ?? []);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <div>

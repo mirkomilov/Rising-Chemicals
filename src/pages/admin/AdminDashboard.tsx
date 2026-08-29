@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
 import { Package, ClipboardList, Users, TrendingUp } from "lucide-react";
+import PageLoader from "@/components/PageLoader";
 
 export default function AdminDashboard() {
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(true);
   const [counts, setCounts] = useState({
     products: 0,
     orders: 0,
@@ -29,6 +31,7 @@ export default function AdminDashboard() {
         customers: customers.count ?? 0,
         newOrders: newOrders.count ?? 0,
       });
+      setLoading(false);
     }
     load();
   }, []);
@@ -39,6 +42,10 @@ export default function AdminDashboard() {
     { label: t("admin.dashboard.customers"), value: counts.customers, icon: Users },
     { label: t("admin.dashboard.newOrders"), value: counts.newOrders, icon: TrendingUp },
   ];
+
+  if (loading) {
+    return <PageLoader />;
+  }
 
   return (
     <div>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
+import AtomSpinner from "@/components/AtomSpinner";
 
 export default function AdminLogin() {
   const { t } = useTranslation();
@@ -54,8 +55,9 @@ export default function AdminLogin() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-md bg-primary px-4 py-2.5 font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
+          className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
         >
+          {loading && <AtomSpinner size={18} />}
           {loading ? t("admin.login.submitting") : t("admin.login.submit")}
         </button>
       </form>

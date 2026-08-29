@@ -41,7 +41,6 @@
     "addToFavorites": "Sevimlilarga qo'shish",
     "removeFromFavorites": "Sevimlilardan olib tashlash",
     "detail": {
-      "loading": "Yuklanmoqda...",
       "notFound": "Mahsulot topilmadi.",
       "back": "Orqaga",
       "description": "Tavsif",
@@ -79,7 +78,8 @@
     "mapPlaceholder": "Xarita shu yerda ko'rsatiladi"
   },
   "common": {
-    "currency": "so'm"
+    "currency": "so'm",
+    "loading": "Yuklanmoqda..."
   },
   "admin": {
     "layout": {
@@ -89,8 +89,7 @@
       "categories": "Kategoriyalar",
       "orders": "Zayavkalar",
       "stats": "Statistika",
-      "logout": "Chiqish",
-      "loading": "Yuklanmoqda..."
+      "logout": "Chiqish"
     },
     "login": {
       "brand": "ADMIN",

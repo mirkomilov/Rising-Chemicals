@@ -9,6 +9,7 @@ import {
   flattenCategoryTree,
 } from "@/lib/categoryTree";
 import { Plus, Trash2, Pencil, FolderPlus, ChevronRight, ChevronDown } from "lucide-react";
+import PageLoader from "@/components/PageLoader";
 
 const emptyForm = { name_uz: "", name_ru: "", name_en: "", parent_id: "" };
 
@@ -20,6 +21,7 @@ export default function AdminCategories() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(true);
 
   function toggleExpand(id: string) {
     setExpandedIds((prev) => {
@@ -36,7 +38,7 @@ export default function AdminCategories() {
   }
 
   useEffect(() => {
-    load();
+    load().finally(() => setLoading(false));
   }, []);
 
   function resetForm() {
@@ -155,6 +157,10 @@ export default function AdminCategories() {
         {isExpanded && children.map((child) => renderCategoryRow(child, depth + 1))}
       </div>
     );
+  }
+
+  if (loading) {
+    return <PageLoader />;
   }
 
   return (

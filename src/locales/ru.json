@@ -41,7 +41,6 @@
     "addToFavorites": "Добавить в избранное",
     "removeFromFavorites": "Убрать из избранного",
     "detail": {
-      "loading": "Загрузка...",
       "notFound": "Товар не найден.",
       "back": "Назад",
       "description": "Описание",
@@ -79,7 +78,8 @@
     "mapPlaceholder": "Здесь будет отображаться карта"
   },
   "common": {
-    "currency": "сум"
+    "currency": "сум",
+    "loading": "Загрузка..."
   },
   "admin": {
     "layout": {
@@ -89,8 +89,7 @@
       "categories": "Категории",
       "orders": "Заявки",
       "stats": "Статистика",
-      "logout": "Выйти",
-      "loading": "Загрузка..."
+      "logout": "Выйти"
     },
     "login": {
       "brand": "АДМИН",

@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabaseClient";
 import type { CategoryTreeNode, Product } from "@/types/database.types";
 import { useLanguageStore } from "@/store/languageStore";
 import ProductCard from "@/components/ProductCard";
+import PageLoader from "@/components/PageLoader";
 import { cn } from "@/lib/utils";
 
 export default function Products() {
@@ -17,6 +18,8 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
+  const [productsLoading, setProductsLoading] = useState(true);
   const language = useLanguageStore((s) => s.language);
 
   function toggleExpand(id: string) {
@@ -31,7 +34,10 @@ export default function Products() {
   useEffect(() => {
     supabase
       .rpc("get_category_tree", { p_locale: language })
-      .then(({ data }) => setCategories(data ?? []));
+      .then(({ data }) => {
+        setCategories(data ?? []);
+        setCategoriesLoading(false);
+      });
   }, [language]);
 
   // Sahifa birinchi ochilganda "hammasi" ko'rinishi o'rniga to'g'ridan-to'g'ri
@@ -45,6 +51,7 @@ export default function Products() {
   useEffect(() => {
     if (searchQuery) {
       // Qidiruv butun katalog bo'yicha, tanlangan kategoriyadan qat'i nazar ishlaydi.
+      setProductsLoading(true);
       const safeQuery = searchQuery.replace(/[,()%]/g, "");
       supabase
         .from("products")
@@ -53,17 +60,24 @@ export default function Products() {
         .or(
           `name_uz.ilike.%${safeQuery}%,name_ru.ilike.%${safeQuery}%,name_en.ilike.%${safeQuery}%`
         )
-        .then(({ data }) => setProducts(data ?? []));
+        .then(({ data }) => {
+          setProducts(data ?? []);
+          setProductsLoading(false);
+        });
       return;
     }
 
     if (!activeCategory) return;
+    setProductsLoading(true);
     supabase
       .from("products")
       .select("*")
       .eq("is_active", true)
       .eq("category_id", activeCategory)
-      .then(({ data }) => setProducts(data ?? []));
+      .then(({ data }) => {
+        setProducts(data ?? []);
+        setProductsLoading(false);
+      });
   }, [activeCategory, searchQuery]);
 
   // get_category_tree() cheksiz chuqurlikdagi daraxtni depth/path bilan
@@ -127,6 +141,10 @@ export default function Products() {
     );
   }
 
+  if (categoriesLoading) {
+    return <PageLoader />;
+  }
+
   return (
     <div className="mx-auto flex max-w-7xl gap-6 px-4 py-8">
       {/* ===== SIDEBAR — KATALOG ===== */}
@@ -143,16 +161,20 @@ export default function Products() {
             ? t("products.searchResultsTitle", { query: searchQuery })
             : t("products.title")}
         </h2>
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {products.length === 0 && (
-            <p className="text-sm text-muted-foreground">
-              {searchQuery ? t("products.noSearchResults") : t("products.noProducts")}
-            </p>
-          )}
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        {productsLoading ? (
+          <PageLoader className="py-12" />
+        ) : (
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {products.length === 0 && (
+              <p className="text-sm text-muted-foreground">
+                {searchQuery ? t("products.noSearchResults") : t("products.noProducts")}
+              </p>
+            )}
+            {products.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

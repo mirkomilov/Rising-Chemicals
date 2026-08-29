@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
 import type { Order, Customer, OrderStatus } from "@/types/database.types";
+import PageLoader from "@/components/PageLoader";
 
 type OrderRow = Order & { customers: Customer | null };
 
@@ -23,6 +24,7 @@ export default function AdminOrders() {
   const { t } = useTranslation();
   const [orders, setOrders] = useState<OrderRow[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   async function load() {
     const { data, error } = await supabase
@@ -39,7 +41,7 @@ export default function AdminOrders() {
   }
 
   useEffect(() => {
-    load();
+    load().finally(() => setLoading(false));
   }, []);
 
   async function updateStatus(id: string, status: OrderStatus) {
@@ -50,6 +52,10 @@ export default function AdminOrders() {
       return;
     }
     load();
+  }
+
+  if (loading) {
+    return <PageLoader />;
   }
 
   return (

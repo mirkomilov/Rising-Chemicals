@@ -41,7 +41,6 @@
     "addToFavorites": "Add to favorites",
     "removeFromFavorites": "Remove from favorites",
     "detail": {
-      "loading": "Loading...",
       "notFound": "Product not found.",
       "back": "Back",
       "description": "Description",
@@ -79,7 +78,8 @@
     "mapPlaceholder": "The map will be displayed here"
   },
   "common": {
-    "currency": "UZS"
+    "currency": "UZS",
+    "loading": "Loading..."
   },
   "admin": {
     "layout": {
@@ -89,8 +89,7 @@
       "categories": "Categories",
       "orders": "Orders",
       "stats": "Statistics",
-      "logout": "Log out",
-      "loading": "Loading..."
+      "logout": "Log out"
     },
     "login": {
       "brand": "ADMIN",

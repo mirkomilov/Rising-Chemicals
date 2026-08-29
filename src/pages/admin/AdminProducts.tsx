@@ -7,6 +7,7 @@ import { useLanguageStore } from "@/store/languageStore";
 import { categoryDisplayName, categoryPathIds } from "@/lib/categoryTree";
 import { cn } from "@/lib/utils";
 import { Plus, Trash2, Pencil, Upload, X } from "lucide-react";
+import PageLoader from "@/components/PageLoader";
 
 const LOCALES: Locale[] = ["uz", "ru", "en"];
 const LOCALE_LABELS: Record<Locale, string> = { uz: "UZ", ru: "RU", en: "EN" };
@@ -89,6 +90,7 @@ export default function AdminProducts() {
   const [techParams, setTechParams] = useState<Record<Locale, TechParamRow[]>>(emptyTechParams());
   const [activeLocale, setActiveLocale] = useState<Locale>("ru");
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   async function loadAll() {
     const [{ data: p }, { data: c }, { data: b }] = await Promise.all([
@@ -102,7 +104,7 @@ export default function AdminProducts() {
   }
 
   useEffect(() => {
-    loadAll();
+    loadAll().finally(() => setLoading(false));
   }, []);
 
   function resetForm() {
@@ -226,6 +228,10 @@ export default function AdminProducts() {
 
   function removeImageAt(idx: number) {
     setImageUrls((prev) => prev.filter((_, i) => i !== idx));
+  }
+
+  if (loading) {
+    return <PageLoader />;
   }
 
   return (
