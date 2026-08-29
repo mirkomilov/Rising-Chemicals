@@ -22,6 +22,8 @@
   "home": {
     "heroTitle": "Rising Chemicals",
     "heroSubtitle": "Quality chemical products for industry and laboratories — with prices and technical parameters.",
+    "catalogTitle": "Catalog",
+    "noCatalog": "No categories added yet.",
     "partnersTitle": "Partner brands",
     "noPartners": "No brands added yet (added via the admin panel).",
     "aboutTitle": "About us",

@@ -22,6 +22,8 @@
   "home": {
     "heroTitle": "Rising Chemicals",
     "heroSubtitle": "Sanoat va laboratoriya uchun sifatli kimyoviy mahsulotlar — narxi va texnik parametrlari bilan.",
+    "catalogTitle": "Katalog",
+    "noCatalog": "Hozircha kategoriya qo'shilmagan.",
     "partnersTitle": "Hamkor brendlar",
     "noPartners": "Hozircha brendlar qo'shilmagan (admin panel orqali qo'shiladi).",
     "aboutTitle": "Firma haqida",

@@ -14,6 +14,7 @@ export default function Products() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get("q")?.trim() ?? "";
+  const categoryFromUrl = searchParams.get("category");
   const [categories, setCategories] = useState<CategoryTreeNode[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
@@ -50,12 +51,18 @@ export default function Products() {
   }, [language]);
 
   // Sahifa birinchi ochilganda "hammasi" ko'rinishi o'rniga to'g'ridan-to'g'ri
-  // birinchi (asosiy) kategoriya tanlangan holda ochiladi.
+  // kategoriya tanlangan holda ochiladi: agar URL'da ?category= bo'lsa o'sha,
+  // aks holda birinchi (asosiy) kategoriya.
   useEffect(() => {
     if (activeCategory !== null || categories.length === 0) return;
+    if (categoryFromUrl && categories.some((c) => c.id === categoryFromUrl)) {
+      setActiveCategory(categoryFromUrl);
+      setExpandedIds((prev) => new Set(prev).add(categoryFromUrl));
+      return;
+    }
     const firstRoot = categories.find((c) => !c.parent_id);
     if (firstRoot) setActiveCategory(firstRoot.id);
-  }, [categories, activeCategory]);
+  }, [categories, activeCategory, categoryFromUrl]);
 
   useEffect(() => {
     if (searchQuery) {

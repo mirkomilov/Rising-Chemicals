@@ -6,6 +6,8 @@ import type { Brand, Product } from "@/types/database.types";
 import { useLanguageStore } from "@/store/languageStore";
 import { productName } from "@/lib/i18n";
 import PageLoader from "@/components/PageLoader";
+import HeroCarousel from "@/components/HeroCarousel";
+import CatalogSidebar from "@/components/CatalogSidebar";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -36,15 +38,12 @@ export default function Home() {
 
   return (
     <div>
-      {/* ===== HERO / CAROUSEL ===== */}
-      {/* TODO: bu yerga haqiqiy slayder (masalan embla-carousel yoki swiper) qo'yiladi.
-          Hozircha statik banner joylashtirilgan. */}
-      <section className="relative h-[420px] overflow-hidden sm:h-[520px] md:h-[640px]">
-        <img
-          src="/main-page/first.png"
-          alt="Rising Chemicals"
-          className="h-full w-full object-cover"
-        />
+      {/* ===== KATALOG + HERO / CAROUSEL ===== */}
+      <section className="mx-auto max-w-7xl px-4 py-6">
+        <div className="flex flex-col gap-4 md:flex-row">
+          <CatalogSidebar />
+          <HeroCarousel />
+        </div>
       </section>
 
       {/* ===== HAMKOR BRENDLAR ===== */}
