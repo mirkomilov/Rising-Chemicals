@@ -6,6 +6,7 @@
     "cart": "Корзина",
     "favorites": "Избранное",
     "searchPlaceholder": "Поиск товара...",
+    "clearSearch": "Очистить",
     "toggleTheme": "Переключить тему",
     "toggleLanguage": "Сменить язык"
   },

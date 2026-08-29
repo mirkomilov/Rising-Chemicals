@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { ShoppingCart, Heart, Search, Atom } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import { ShoppingCart, Heart, Atom } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
+import HeaderSearch from "@/components/HeaderSearch";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -16,16 +16,8 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export default function Header() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const totalCount = useCartStore((s) => s.totalCount());
   const favoritesCount = useFavoritesStore((s) => s.ids.length);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  function handleSearchSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const q = searchQuery.trim();
-    navigate(q ? `/products?q=${encodeURIComponent(q)}` : "/products");
-  }
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur">
@@ -54,18 +46,7 @@ export default function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
-          <form onSubmit={handleSearchSubmit} className="hidden md:block md:w-40 lg:w-52">
-            <div className="group relative">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
-              <input
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={t("header.searchPlaceholder")}
-                className="w-full rounded-full border border-transparent bg-muted py-2 pl-9 pr-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/40 focus:bg-background focus:ring-2 focus:ring-primary/20"
-              />
-            </div>
-          </form>
+          <HeaderSearch />
 
           <Link
             to="/favorites"
