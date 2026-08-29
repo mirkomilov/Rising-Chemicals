@@ -63,3 +63,48 @@
     font-family: "Inter", system-ui, -apple-system, sans-serif;
   }
 }
+
+/* ===== Atom loader — X/Y/Z o'qlarida uch o'lchamli aylanish =====
+   Uch nested qatlam har biri o'z o'qi (X, Y, Z) bo'yicha, turli
+   davomiylikda aylanadi — natijada tekis (2D) emas, haqiqiy tumbling
+   (uchayotgan/aylanayotgan) 3D harakat hosil bo'ladi. */
+.atom-spin-perspective {
+  perspective: 700px;
+}
+.atom-spin-x,
+.atom-spin-y {
+  transform-style: preserve-3d;
+}
+.atom-spin-x {
+  animation: atom-spin-x 3.2s linear infinite;
+}
+.atom-spin-y {
+  animation: atom-spin-y 4.2s linear infinite;
+}
+.atom-spin-z {
+  animation: atom-spin-z 5.6s linear infinite;
+}
+@keyframes atom-spin-x {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(360deg);
+  }
+}
+@keyframes atom-spin-y {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+@keyframes atom-spin-z {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}

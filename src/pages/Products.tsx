@@ -162,7 +162,7 @@ export default function Products() {
             : t("products.title")}
         </h2>
         {productsLoading ? (
-          <PageLoader className="py-12" />
+          <PageLoader className="min-h-[30vh] py-12" />
         ) : (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {products.length === 0 && (
