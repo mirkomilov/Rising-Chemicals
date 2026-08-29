@@ -156,7 +156,7 @@ export default function Products() {
                 </ul>
               )}
 
-              <p className="mt-2 font-semibold text-primary">
+              <p className="mt-auto pt-2 font-semibold text-primary">
                 {p.price.toLocaleString()} {t("common.currency")}
               </p>
               <button
