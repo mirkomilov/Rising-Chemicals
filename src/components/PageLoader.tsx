@@ -11,7 +11,7 @@ export default function PageLoader({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex min-h-[60vh] w-full flex-col items-center justify-center gap-5 text-sm text-muted-foreground",
+        "flex min-h-screen w-full flex-col items-center justify-center gap-5 text-sm text-muted-foreground",
         className
       )}
     >

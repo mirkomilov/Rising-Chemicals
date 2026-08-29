@@ -64,35 +64,52 @@
   }
 }
 
-/* ===== Atom loader — X/Y/Z o'qlarida uch o'lchamli aylanish =====
-   Uch nested qatlam har biri o'z o'qi (X, Y, Z) bo'yicha, turli
-   davomiylikda aylanadi — natijada tekis (2D) emas, haqiqiy tumbling
-   (uchayotgan/aylanayotgan) 3D harakat hosil bo'ladi. */
-.atom-spin-perspective {
-  perspective: 700px;
+/* ===== Atom/globus loader =====
+   Soyalangan sharsimon "yadro" (yer shari kabi Y o'qida aylanadi) +
+   uning atrofida X/Y bo'yicha qiyshiq, Z o'qida aylanadigan ikkita
+   orbita halqasi (har birida bittadan elektron nuqta). Bu klassik
+   "atom orbitasi" texnikasi: har bir halqa o'zining qiyshiq holatida
+   turgan holda aylanadi, shu bois uning ustidagi nuqta chinakam
+   ellips (uch o'lchamli orbita) bo'ylab harakatlanayotgandek ko'rinadi. */
+.atom3d {
+  position: relative;
+  perspective: 800px;
 }
-.atom-spin-x,
-.atom-spin-y {
+.atom3d-sphere {
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, #4a9bd6 0%, #0f4c75 55%, #082c46 100%);
+  box-shadow:
+    inset -10px -10px 22px rgba(0, 0, 0, 0.45),
+    0 6px 16px rgba(0, 0, 0, 0.25);
+  animation: atom3d-sphere-spin 5s linear infinite;
+}
+.atom3d-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2.5px solid rgba(15, 76, 117, 0.5);
   transform-style: preserve-3d;
 }
-.atom-spin-x {
-  animation: atom-spin-x 3.2s linear infinite;
+.atom3d-ring-a {
+  animation: atom3d-ring-a-spin 3s linear infinite;
 }
-.atom-spin-y {
-  animation: atom-spin-y 4.2s linear infinite;
+.atom3d-ring-b {
+  animation: atom3d-ring-b-spin 4.2s linear infinite;
 }
-.atom-spin-z {
-  animation: atom-spin-z 5.6s linear infinite;
+.atom3d-dot {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: #1ac29b;
+  box-shadow: 0 0 8px rgba(26, 194, 155, 0.85);
 }
-@keyframes atom-spin-x {
-  from {
-    transform: rotateX(0deg);
-  }
-  to {
-    transform: rotateX(360deg);
-  }
-}
-@keyframes atom-spin-y {
+@keyframes atom3d-sphere-spin {
   from {
     transform: rotateY(0deg);
   }
@@ -100,11 +117,19 @@
     transform: rotateY(360deg);
   }
 }
-@keyframes atom-spin-z {
+@keyframes atom3d-ring-a-spin {
   from {
-    transform: rotateZ(0deg);
+    transform: rotateX(75deg) rotateZ(0deg);
   }
   to {
-    transform: rotateZ(360deg);
+    transform: rotateX(75deg) rotateZ(360deg);
+  }
+}
+@keyframes atom3d-ring-b-spin {
+  from {
+    transform: rotateX(75deg) rotateY(60deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(75deg) rotateY(60deg) rotateZ(360deg);
   }
 }

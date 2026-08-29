@@ -40,11 +40,7 @@ export default function AdminLayout() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <PageLoader />
-      </div>
-    );
+    return <PageLoader />;
   }
 
   // Admin sessiyasi yo'q bo'lsa login sahifasiga yo'naltiramiz

@@ -5,20 +5,19 @@ interface AtomSpinnerProps {
   className?: string;
 }
 
-// Brendning atom ikonkasi — X, Y va Z o'qlarida bir vaqtda, turli
-// tezlikda aylanadigan uch qatlamli 3D animatsiya (public/atom-icon.png).
+// Sharsimon (globus kabi) 3D loader: soyalangan yadro + har biri o'z
+// tekisligida qiyshiq turgan holda aylanadigan ikkita orbita halqasi
+// (har birida bitta elektron nuqta). Butunlay CSS (index.css) orqali
+// chizilgan — 3D chuqurlik va soya effekti uchun rasm ishlatilmaydi.
 export default function AtomSpinner({ size = 48, className }: AtomSpinnerProps) {
   return (
-    <div
-      className={cn("atom-spin-perspective", className)}
-      style={{ width: size, height: size }}
-    >
-      <div className="atom-spin-x h-full w-full">
-        <div className="atom-spin-y h-full w-full">
-          <div className="atom-spin-z h-full w-full">
-            <img src="/atom-icon.png" alt="" className="h-full w-full object-contain" />
-          </div>
-        </div>
+    <div className={cn("atom3d", className)} style={{ width: size, height: size }}>
+      <div className="atom3d-sphere" />
+      <div className="atom3d-ring atom3d-ring-a">
+        <span className="atom3d-dot" />
+      </div>
+      <div className="atom3d-ring atom3d-ring-b">
+        <span className="atom3d-dot" />
       </div>
     </div>
   );
