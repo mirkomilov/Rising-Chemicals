@@ -14,7 +14,7 @@ export default function BrandsMarquee() {
             <img
               src={src}
               alt=""
-              className="max-h-full max-w-full object-contain opacity-80 grayscale transition hover:opacity-100 hover:grayscale-0"
+              className="max-h-full max-w-full object-contain"
             />
           </div>
         ))}
