@@ -63,29 +63,3 @@
     font-family: "Inter", system-ui, -apple-system, sans-serif;
   }
 }
-
-/* ===== Cheksizlik (∞) belgisi bo'ylab harakatlanuvchi nuqtalar loaderi =====
-   Har bir nuqta xuddi shu SVG yo'l (figure-8) bo'ylab harakatlanadi;
-   manfiy animation-delay tufayli ular boshidanoq yo'l bo'ylab tekis
-   taqsimlangan holda ko'rinadi va uzluksiz aylanaveradi. */
-.infinity-dot {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  offset-path: path(
-    "M 20,50 C 20,20 80,20 100,50 C 120,80 180,80 180,50 C 180,20 120,20 100,50 C 80,80 20,80 20,50 Z"
-  );
-  offset-anchor: center;
-  offset-distance: 0%;
-  animation: infinity-move linear infinite;
-  animation-duration: var(--infinity-duration, 3.6s);
-}
-@keyframes infinity-move {
-  from {
-    offset-distance: 0%;
-  }
-  to {
-    offset-distance: 100%;
-  }
-}

@@ -15,7 +15,7 @@ export default function PageLoader({ className }: { className?: string }) {
         className
       )}
     >
-      <AtomSpinner size={140} />
+      <AtomSpinner size={56} />
       {t("common.loading")}
     </div>
   );
