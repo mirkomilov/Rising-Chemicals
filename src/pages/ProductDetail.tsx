@@ -8,6 +8,7 @@ import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import { useLanguageStore } from "@/store/languageStore";
 import { productName, productDescription, productTechParams } from "@/lib/i18n";
+import AtomSpinner from "@/components/AtomSpinner";
 import { cn } from "@/lib/utils";
 
 export default function ProductDetail() {
@@ -38,7 +39,8 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="mx-auto max-w-5xl px-4 py-16 text-center text-muted-foreground">
+      <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-4 py-16 text-center text-muted-foreground">
+        <AtomSpinner size={56} />
         {t("products.detail.loading")}
       </div>
     );

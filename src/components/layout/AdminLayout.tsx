@@ -13,6 +13,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
+import AtomSpinner from "@/components/AtomSpinner";
 
 const links = [
   { to: "/admin", labelKey: "admin.layout.dashboard", icon: LayoutDashboard, end: true },
@@ -40,7 +41,8 @@ export default function AdminLayout() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center text-muted-foreground">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 text-muted-foreground">
+        <AtomSpinner size={56} />
         {t("admin.layout.loading")}
       </div>
     );
