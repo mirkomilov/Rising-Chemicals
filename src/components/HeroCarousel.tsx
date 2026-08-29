@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const SLIDES = [
-  "/main-page/first.png",
-  "/main-page/second.png",
-  "/main-page/third.png",
-];
+const SLIDES = Array.from({ length: 6 }, (_, i) => `/main-page/img${i + 1}.png`);
 
 const AUTO_ADVANCE_MS = 5000;
 

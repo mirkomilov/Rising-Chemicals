@@ -51,14 +51,6 @@ export default function Home() {
         <BrandsMarquee />
       </section>
 
-      {/* ===== FIRMA HAQIDA ===== */}
-      <section className="bg-muted/40 py-12">
-        <div className="mx-auto max-w-7xl px-4">
-          <h2 className="mb-3 text-xl font-semibold">{t("home.aboutTitle")}</h2>
-          <p className="max-w-3xl text-muted-foreground">{t("home.aboutText")}</p>
-        </div>
-      </section>
-
       {/* ===== TOP MAHSULOTLAR ===== */}
       <section className="mx-auto max-w-7xl px-4 py-12">
         <h2 className="mb-6 text-xl font-semibold">{t("home.topProductsTitle")}</h2>
@@ -89,6 +81,14 @@ export default function Home() {
               </p>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* ===== FIRMA HAQIDA ===== */}
+      <section className="bg-muted/40 py-12">
+        <div className="mx-auto max-w-7xl px-4">
+          <h2 className="mb-3 text-xl font-semibold">{t("home.aboutTitle")}</h2>
+          <p className="max-w-3xl text-muted-foreground">{t("home.aboutText")}</p>
         </div>
       </section>
     </div>
