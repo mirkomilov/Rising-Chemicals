@@ -39,10 +39,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <form
-          onSubmit={handleSearchSubmit}
-          className="hidden md:flex md:max-w-xs md:flex-1"
-        >
+        <form onSubmit={handleSearchSubmit} className="hidden md:flex md:w-56 lg:w-64">
           <div className="relative w-full">
             <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
