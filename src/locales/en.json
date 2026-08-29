@@ -166,7 +166,15 @@
       "statusNew": "New",
       "statusProcessing": "Processing",
       "statusCompleted": "Completed",
-      "statusCancelled": "Cancelled"
+      "statusCancelled": "Cancelled",
+      "email": "Email",
+      "comment": "Comment",
+      "details": "Order details",
+      "close": "Close",
+      "items": "Order items",
+      "quantity": "Quantity",
+      "unitPrice": "Price",
+      "noItems": "No products found."
     },
     "stats": {
       "title": "Statistics",

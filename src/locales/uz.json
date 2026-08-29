@@ -166,7 +166,15 @@
       "statusNew": "Yangi",
       "statusProcessing": "Ko'rib chiqilmoqda",
       "statusCompleted": "Bajarildi",
-      "statusCancelled": "Bekor qilindi"
+      "statusCancelled": "Bekor qilindi",
+      "email": "Email",
+      "comment": "Izoh",
+      "details": "Zayavka tafsilotlari",
+      "close": "Yopish",
+      "items": "Buyurtma tarkibi",
+      "quantity": "Soni",
+      "unitPrice": "Narxi",
+      "noItems": "Mahsulotlar topilmadi."
     },
     "stats": {
       "title": "Statistika",

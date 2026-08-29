@@ -166,7 +166,15 @@
       "statusNew": "Новый",
       "statusProcessing": "В обработке",
       "statusCompleted": "Выполнен",
-      "statusCancelled": "Отменён"
+      "statusCancelled": "Отменён",
+      "email": "Email",
+      "comment": "Комментарий",
+      "details": "Детали заявки",
+      "close": "Закрыть",
+      "items": "Состав заказа",
+      "quantity": "Количество",
+      "unitPrice": "Цена",
+      "noItems": "Товары не найдены."
     },
     "stats": {
       "title": "Статистика",
