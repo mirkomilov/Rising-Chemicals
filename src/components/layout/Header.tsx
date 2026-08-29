@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
-import { ShoppingCart, Heart, Atom } from "lucide-react";
+import { ShoppingCart, Heart } from "lucide-react";
 import { useCartStore } from "@/store/cartStore";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import HeaderSearch from "@/components/HeaderSearch";
@@ -22,13 +22,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur">
       <div className="relative mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
-        {/* Logo — /public/logo.png ga asl logotipni joylashtiring */}
-        <Link to="/" className="flex shrink-0 items-center gap-2">
-          <Atom className="h-7 w-7 text-primary" strokeWidth={2.2} />
-          <span className="text-lg font-bold tracking-tight">
-            <span className="text-primary">RISING</span>{" "}
-            <span className="text-secondary">CHEMICALS</span>
-          </span>
+        <Link to="/" className="flex shrink-0 items-center">
+          <img src="/rising-logo.jpg" alt="Rising Chemicals" className="h-9 w-auto" />
         </Link>
 
         {/* Nav havolalari sahifaning haqiqiy o'rtasiga joylashadi, chap/o'ng
