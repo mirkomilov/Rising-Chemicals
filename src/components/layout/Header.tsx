@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4">
+      <div className="relative mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
         {/* Logo — /public/logo.png ga asl logotipni joylashtiring */}
         <Link to="/" className="flex shrink-0 items-center gap-2">
           <Atom className="h-7 w-7 text-primary" strokeWidth={2.2} />
@@ -39,7 +39,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <form onSubmit={handleSearchSubmit} className="hidden md:flex md:w-56 lg:w-64">
+        <form onSubmit={handleSearchSubmit} className="hidden md:flex md:w-40 lg:w-48">
           <div className="relative w-full">
             <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
@@ -52,7 +52,9 @@ export default function Header() {
           </div>
         </form>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        {/* Nav havolalari sahifaning haqiqiy o'rtasiga joylashadi, chap/o'ng
+            guruhlarning kengligidan qat'i nazar. */}
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 md:flex">
           <NavLink to="/" className={navLinkClass} end>
             {t("header.home")}
           </NavLink>
@@ -64,7 +66,7 @@ export default function Header() {
           </NavLink>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-2">
           <Link
             to="/favorites"
             className="relative rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
