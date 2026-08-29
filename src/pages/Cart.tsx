@@ -66,7 +66,8 @@ export default function Cart() {
       setSuccess(true);
     } catch (err) {
       console.error(err);
-      alert(t("cart.errorAlert"));
+      const message = err instanceof Error ? err.message : String(err);
+      alert(`${t("cart.errorAlert")}\n\n${message}`);
     } finally {
       setSubmitting(false);
     }
