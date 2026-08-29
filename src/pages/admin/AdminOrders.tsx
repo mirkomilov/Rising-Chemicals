@@ -155,22 +155,18 @@ export default function AdminOrders() {
                 <span className="text-muted-foreground">{t("admin.orders.phone")}: </span>
                 {selectedOrder.customers?.phone ?? "—"}
               </p>
-              {selectedOrder.customers?.email && (
-                <p>
-                  <span className="text-muted-foreground">{t("admin.orders.email")}: </span>
-                  {selectedOrder.customers.email}
-                </p>
-              )}
+              <p>
+                <span className="text-muted-foreground">{t("admin.orders.email")}: </span>
+                {selectedOrder.customers?.email ?? "—"}
+              </p>
               <p>
                 <span className="text-muted-foreground">{t("admin.orders.date")}: </span>
                 {new Date(selectedOrder.created_at).toLocaleString()}
               </p>
-              {selectedOrder.comment && (
-                <p>
-                  <span className="text-muted-foreground">{t("admin.orders.comment")}: </span>
-                  {selectedOrder.comment}
-                </p>
-              )}
+              <p>
+                <span className="text-muted-foreground">{t("admin.orders.comment")}: </span>
+                {selectedOrder.comment ?? "—"}
+              </p>
             </div>
 
             {/* Status */}
