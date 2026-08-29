@@ -146,6 +146,7 @@
     },
     "orders": {
       "title": "Zayavkalar",
+      "noOrders": "Hozircha zayavkalar yo'q.",
       "customer": "Mijoz",
       "phone": "Telefon",
       "amount": "Summa",

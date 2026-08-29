@@ -146,6 +146,7 @@
     },
     "orders": {
       "title": "Orders",
+      "noOrders": "No orders yet.",
       "customer": "Customer",
       "phone": "Phone",
       "amount": "Amount",

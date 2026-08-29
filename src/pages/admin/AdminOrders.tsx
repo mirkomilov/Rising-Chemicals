@@ -22,12 +22,19 @@ const statusColor: Record<OrderStatus, string> = {
 export default function AdminOrders() {
   const { t } = useTranslation();
   const [orders, setOrders] = useState<OrderRow[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   async function load() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("orders")
       .select("*, customers(*)")
       .order("created_at", { ascending: false });
+    if (error) {
+      console.error(error);
+      setLoadError(error.message);
+      return;
+    }
+    setLoadError(null);
     setOrders((data as OrderRow[]) ?? []);
   }
 
@@ -36,7 +43,12 @@ export default function AdminOrders() {
   }, []);
 
   async function updateStatus(id: string, status: OrderStatus) {
-    await supabase.from("orders").update({ status }).eq("id", id);
+    const { error } = await supabase.from("orders").update({ status }).eq("id", id);
+    if (error) {
+      console.error(error);
+      alert(`Xatolik: ${error.message}`);
+      return;
+    }
     load();
   }
 
@@ -57,6 +69,20 @@ export default function AdminOrders() {
             </tr>
           </thead>
           <tbody>
+            {loadError && (
+              <tr>
+                <td colSpan={6} className="p-4 text-center text-red-500">
+                  Xatolik: {loadError}
+                </td>
+              </tr>
+            )}
+            {!loadError && orders.length === 0 && (
+              <tr>
+                <td colSpan={6} className="p-4 text-center text-muted-foreground">
+                  {t("admin.orders.noOrders")}
+                </td>
+              </tr>
+            )}
             {orders.map((o) => (
               <tr key={o.id} className="border-t border-border">
                 <td className="p-3">{o.customers?.full_name ?? "—"}</td>
