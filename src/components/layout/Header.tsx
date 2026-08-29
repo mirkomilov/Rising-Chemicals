@@ -39,19 +39,6 @@ export default function Header() {
           </span>
         </Link>
 
-        <form onSubmit={handleSearchSubmit} className="hidden md:flex md:w-40 lg:w-48">
-          <div className="relative w-full">
-            <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <input
-              type="search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t("header.searchPlaceholder")}
-              className="w-full rounded-md border border-input bg-background py-1.5 pl-8 pr-3 text-sm"
-            />
-          </div>
-        </form>
-
         {/* Nav havolalari sahifaning haqiqiy o'rtasiga joylashadi, chap/o'ng
             guruhlarning kengligidan qat'i nazar. */}
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 md:flex">
@@ -67,6 +54,19 @@ export default function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
+          <form onSubmit={handleSearchSubmit} className="hidden md:block md:w-40 lg:w-52">
+            <div className="group relative">
+              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t("header.searchPlaceholder")}
+                className="w-full rounded-full border border-transparent bg-muted py-2 pl-9 pr-4 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/40 focus:bg-background focus:ring-2 focus:ring-primary/20"
+              />
+            </div>
+          </form>
+
           <Link
             to="/favorites"
             className="relative rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
