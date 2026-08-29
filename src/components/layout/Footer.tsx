@@ -7,11 +7,7 @@ export default function Footer() {
     <footer className="mt-20 border-t border-border bg-muted/40">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 md:grid-cols-3">
         <div>
-          <img
-            src="/rising_chemicals_logo_transparent.png"
-            alt="Rising Chemicals"
-            className="mb-2 h-10 w-auto"
-          />
+          <img src="/rising-logo.png" alt="Rising Chemicals" className="mb-2 h-11 w-auto" />
           <p className="text-sm text-muted-foreground">{t("footer.tagline")}</p>
         </div>
 
