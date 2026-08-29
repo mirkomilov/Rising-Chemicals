@@ -182,9 +182,13 @@ export default function Cart() {
               />
               <input
                 required
+                type="tel"
+                inputMode="numeric"
                 placeholder={t("cart.phone")}
                 value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, phone: e.target.value.replace(/[^\d+]/g, "") })
+                }
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               />
               <input

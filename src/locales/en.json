@@ -162,7 +162,6 @@
       "amount": "Amount",
       "date": "Date",
       "status": "Status",
-      "telegram": "Telegram",
       "statusNew": "New",
       "statusProcessing": "Processing",
       "statusCompleted": "Completed",

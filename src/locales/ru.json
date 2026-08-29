@@ -162,7 +162,6 @@
       "amount": "Сумма",
       "date": "Дата",
       "status": "Статус",
-      "telegram": "Telegram",
       "statusNew": "Новый",
       "statusProcessing": "В обработке",
       "statusCompleted": "Выполнен",

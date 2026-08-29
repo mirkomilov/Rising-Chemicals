@@ -171,10 +171,6 @@ export default function AdminOrders() {
                   {selectedOrder.comment}
                 </p>
               )}
-              <p>
-                <span className="text-muted-foreground">{t("admin.orders.telegram")}: </span>
-                {selectedOrder.telegram_sent ? "✅" : "—"}
-              </p>
             </div>
 
             {/* Status */}
