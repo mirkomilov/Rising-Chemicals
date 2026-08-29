@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
-    "text-sm font-medium transition-colors hover:text-primary",
+    "text-base font-medium transition-colors hover:text-primary",
     isActive ? "text-primary" : "text-muted-foreground"
   );
 
@@ -28,7 +28,7 @@ export default function Header() {
 
         {/* Nav havolalari sahifaning haqiqiy o'rtasiga joylashadi, chap/o'ng
             guruhlarning kengligidan qat'i nazar. */}
-        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 md:flex">
+        <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">
           <NavLink to="/" className={navLinkClass} end>
             {t("header.home")}
           </NavLink>
