@@ -64,72 +64,28 @@
   }
 }
 
-/* ===== Atom/globus loader =====
-   Soyalangan sharsimon "yadro" (yer shari kabi Y o'qida aylanadi) +
-   uning atrofida X/Y bo'yicha qiyshiq, Z o'qida aylanadigan ikkita
-   orbita halqasi (har birida bittadan elektron nuqta). Bu klassik
-   "atom orbitasi" texnikasi: har bir halqa o'zining qiyshiq holatida
-   turgan holda aylanadi, shu bois uning ustidagi nuqta chinakam
-   ellips (uch o'lchamli orbita) bo'ylab harakatlanayotgandek ko'rinadi. */
-.atom3d {
-  position: relative;
-  perspective: 800px;
-}
-.atom3d-sphere {
+/* ===== Cheksizlik (∞) belgisi bo'ylab harakatlanuvchi nuqtalar loaderi =====
+   Har bir nuqta xuddi shu SVG yo'l (figure-8) bo'ylab harakatlanadi;
+   manfiy animation-delay tufayli ular boshidanoq yo'l bo'ylab tekis
+   taqsimlangan holda ko'rinadi va uzluksiz aylanaveradi. */
+.infinity-dot {
   position: absolute;
-  inset: 22%;
+  top: 0;
+  left: 0;
   border-radius: 50%;
-  background: radial-gradient(circle at 32% 28%, #4a9bd6 0%, #0f4c75 55%, #082c46 100%);
-  box-shadow:
-    inset -10px -10px 22px rgba(0, 0, 0, 0.45),
-    0 6px 16px rgba(0, 0, 0, 0.25);
-  animation: atom3d-sphere-spin 5s linear infinite;
+  offset-path: path(
+    "M 20,50 C 20,20 80,20 100,50 C 120,80 180,80 180,50 C 180,20 120,20 100,50 C 80,80 20,80 20,50 Z"
+  );
+  offset-anchor: center;
+  offset-distance: 0%;
+  animation: infinity-move linear infinite;
+  animation-duration: var(--infinity-duration, 3.6s);
 }
-.atom3d-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2.5px solid rgba(15, 76, 117, 0.5);
-  transform-style: preserve-3d;
-}
-.atom3d-ring-a {
-  animation: atom3d-ring-a-spin 3s linear infinite;
-}
-.atom3d-ring-b {
-  animation: atom3d-ring-b-spin 4.2s linear infinite;
-}
-.atom3d-dot {
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  margin-left: -5px;
-  border-radius: 50%;
-  background: #1ac29b;
-  box-shadow: 0 0 8px rgba(26, 194, 155, 0.85);
-}
-@keyframes atom3d-sphere-spin {
+@keyframes infinity-move {
   from {
-    transform: rotateY(0deg);
+    offset-distance: 0%;
   }
   to {
-    transform: rotateY(360deg);
-  }
-}
-@keyframes atom3d-ring-a-spin {
-  from {
-    transform: rotateX(75deg) rotateZ(0deg);
-  }
-  to {
-    transform: rotateX(75deg) rotateZ(360deg);
-  }
-}
-@keyframes atom3d-ring-b-spin {
-  from {
-    transform: rotateX(75deg) rotateY(60deg) rotateZ(0deg);
-  }
-  to {
-    transform: rotateX(75deg) rotateY(60deg) rotateZ(360deg);
+    offset-distance: 100%;
   }
 }
