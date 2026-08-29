@@ -4,6 +4,8 @@
     "products": "Products",
     "contact": "Contact",
     "cart": "Cart",
+    "favorites": "Favorites",
+    "searchPlaceholder": "Search products...",
     "toggleTheme": "Toggle theme",
     "toggleLanguage": "Change language"
   },
@@ -29,10 +31,14 @@
   "products": {
     "catalog": "Catalog",
     "title": "Products",
+    "searchResultsTitle": "Search results for \"{{query}}\"",
     "noProducts": "No products found in this category.",
+    "noSearchResults": "Nothing found.",
     "addToCart": "Add to cart",
     "expand": "Expand",
     "collapse": "Collapse",
+    "addToFavorites": "Add to favorites",
+    "removeFromFavorites": "Remove from favorites",
     "detail": {
       "loading": "Loading...",
       "notFound": "Product not found.",
@@ -40,6 +46,10 @@
       "description": "Description",
       "techParams": "Technical parameters"
     }
+  },
+  "favorites": {
+    "title": "Favorites",
+    "empty": "Your favorites list is empty."
   },
   "cart": {
     "title": "Cart",

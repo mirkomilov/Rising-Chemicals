@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Heart } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import type { Product } from "@/types/database.types";
 import { useCartStore } from "@/store/cartStore";
+import { useFavoritesStore } from "@/store/favoritesStore";
 import { useLanguageStore } from "@/store/languageStore";
 import { productName, productDescription, productTechParams } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -14,9 +15,11 @@ export default function ProductDetail() {
   const { t } = useTranslation();
   const language = useLanguageStore((s) => s.language);
   const addItem = useCartStore((s) => s.addItem);
+  const toggleFavorite = useFavoritesStore((s) => s.toggleFavorite);
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
+  const isFavorite = useFavoritesStore((s) => (product ? s.isFavorite(product.id) : false));
 
   useEffect(() => {
     if (!id) return;
@@ -97,7 +100,21 @@ export default function ProductDetail() {
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold">{productName(product, language)}</h1>
+          <div className="flex items-start justify-between gap-4">
+            <h1 className="text-2xl font-bold">{productName(product, language)}</h1>
+            <button
+              type="button"
+              onClick={() => toggleFavorite(product.id)}
+              aria-label={
+                isFavorite
+                  ? t("products.removeFromFavorites")
+                  : t("products.addToFavorites")
+              }
+              className="shrink-0 rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-red-500"
+            >
+              <Heart className={cn("h-6 w-6", isFavorite && "fill-red-500 text-red-500")} />
+            </button>
+          </div>
           <p className="mt-2 text-2xl font-semibold text-primary">
             {product.price.toLocaleString()} {t("common.currency")}
           </p>

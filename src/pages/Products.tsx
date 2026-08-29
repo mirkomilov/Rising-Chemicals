@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import type { CategoryTreeNode, Product } from "@/types/database.types";
-import { useCartStore } from "@/store/cartStore";
 import { useLanguageStore } from "@/store/languageStore";
-import { productName, productTechParams } from "@/lib/i18n";
+import ProductCard from "@/components/ProductCard";
 import { cn } from "@/lib/utils";
 
 export default function Products() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("q")?.trim() ?? "";
   const [categories, setCategories] = useState<CategoryTreeNode[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
-  const addItem = useCartStore((s) => s.addItem);
   const language = useLanguageStore((s) => s.language);
 
   function toggleExpand(id: string) {
@@ -42,6 +43,20 @@ export default function Products() {
   }, [categories, activeCategory]);
 
   useEffect(() => {
+    if (searchQuery) {
+      // Qidiruv butun katalog bo'yicha, tanlangan kategoriyadan qat'i nazar ishlaydi.
+      const safeQuery = searchQuery.replace(/[,()%]/g, "");
+      supabase
+        .from("products")
+        .select("*")
+        .eq("is_active", true)
+        .or(
+          `name_uz.ilike.%${safeQuery}%,name_ru.ilike.%${safeQuery}%,name_en.ilike.%${safeQuery}%`
+        )
+        .then(({ data }) => setProducts(data ?? []));
+      return;
+    }
+
     if (!activeCategory) return;
     supabase
       .from("products")
@@ -49,13 +64,18 @@ export default function Products() {
       .eq("is_active", true)
       .eq("category_id", activeCategory)
       .then(({ data }) => setProducts(data ?? []));
-  }, [activeCategory]);
+  }, [activeCategory, searchQuery]);
 
   // get_category_tree() cheksiz chuqurlikdagi daraxtni depth/path bilan
   // qaytaradi — har bir tugunning bolalarini parent_id orqali topamiz.
   const roots = categories.filter((c) => !c.parent_id);
   const childrenOf = (parentId: string) =>
     categories.filter((c) => c.parent_id === parentId);
+
+  function selectCategory(id: string) {
+    if (searchQuery) navigate("/products");
+    setActiveCategory(id);
+  }
 
   function renderCategoryNode(node: CategoryTreeNode) {
     const children = childrenOf(node.id);
@@ -65,7 +85,7 @@ export default function Products() {
         <div
           className={cn(
             "flex items-center rounded-md pr-3",
-            activeCategory === node.id
+            !searchQuery && activeCategory === node.id
               ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:bg-muted"
           )}
@@ -89,7 +109,7 @@ export default function Products() {
           )}
           <button
             onClick={() => {
-              setActiveCategory(node.id);
+              selectCategory(node.id);
               if (children.length > 0) {
                 setExpandedIds((prev) => new Set(prev).add(node.id));
               }
@@ -118,54 +138,19 @@ export default function Products() {
 
       {/* ===== MAHSULOTLAR RO'YXATI ===== */}
       <section className="flex-1">
-        <h2 className="mb-6 text-xl font-semibold">{t("products.title")}</h2>
+        <h2 className="mb-6 text-xl font-semibold">
+          {searchQuery
+            ? t("products.searchResultsTitle", { query: searchQuery })
+            : t("products.title")}
+        </h2>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {products.length === 0 && (
-            <p className="text-sm text-muted-foreground">{t("products.noProducts")}</p>
+            <p className="text-sm text-muted-foreground">
+              {searchQuery ? t("products.noSearchResults") : t("products.noProducts")}
+            </p>
           )}
           {products.map((p) => (
-            <div
-              key={p.id}
-              className="flex flex-col rounded-lg border border-border bg-card p-3"
-            >
-              <Link to={`/products/${p.id}`} className="block">
-                <div className="mb-2 aspect-square overflow-hidden rounded-md bg-muted">
-                  {p.image_urls?.[0] && (
-                    <img
-                      src={p.image_urls[0]}
-                      alt={productName(p, language)}
-                      className="h-full w-full object-cover"
-                    />
-                  )}
-                </div>
-                <p className="line-clamp-2 text-sm font-medium hover:text-primary">
-                  {productName(p, language)}
-                </p>
-              </Link>
-
-              {/* Texnik parametrlar */}
-              {Object.keys(productTechParams(p, language)).length > 0 && (
-                <ul className="mt-1 space-y-0.5 text-xs text-muted-foreground">
-                  {Object.entries(productTechParams(p, language))
-                    .slice(0, 2)
-                    .map(([k, v]) => (
-                      <li key={k}>
-                        {k}: {v}
-                      </li>
-                    ))}
-                </ul>
-              )}
-
-              <p className="mt-auto pt-2 font-semibold text-primary">
-                {p.price.toLocaleString()} {t("common.currency")}
-              </p>
-              <button
-                onClick={() => addItem(p)}
-                className="mt-2 rounded-md bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground transition hover:opacity-90"
-              >
-                {t("products.addToCart")}
-              </button>
-            </div>
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
       </section>

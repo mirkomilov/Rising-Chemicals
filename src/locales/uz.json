@@ -4,6 +4,8 @@
     "products": "Mahsulotlar",
     "contact": "Aloqa",
     "cart": "Savatcha",
+    "favorites": "Sevimlilar",
+    "searchPlaceholder": "Mahsulot qidirish...",
     "toggleTheme": "Temani almashtirish",
     "toggleLanguage": "Tilni almashtirish"
   },
@@ -29,10 +31,14 @@
   "products": {
     "catalog": "Katalog",
     "title": "Mahsulotlar",
+    "searchResultsTitle": "\"{{query}}\" bo'yicha qidiruv natijalari",
     "noProducts": "Bu kategoriyada mahsulot topilmadi.",
+    "noSearchResults": "Hech narsa topilmadi.",
     "addToCart": "Savatchaga qo'shish",
     "expand": "Ochish",
     "collapse": "Yopish",
+    "addToFavorites": "Sevimlilarga qo'shish",
+    "removeFromFavorites": "Sevimlilardan olib tashlash",
     "detail": {
       "loading": "Yuklanmoqda...",
       "notFound": "Mahsulot topilmadi.",
@@ -40,6 +46,10 @@
       "description": "Tavsif",
       "techParams": "Texnik parametrlar"
     }
+  },
+  "favorites": {
+    "title": "Sevimlilar",
+    "empty": "Sevimlilar ro'yxati hozircha bo'sh."
   },
   "cart": {
     "title": "Savatcha",

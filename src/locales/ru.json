@@ -4,6 +4,8 @@
     "products": "Продукция",
     "contact": "Контакты",
     "cart": "Корзина",
+    "favorites": "Избранное",
+    "searchPlaceholder": "Поиск товара...",
     "toggleTheme": "Переключить тему",
     "toggleLanguage": "Сменить язык"
   },
@@ -29,10 +31,14 @@
   "products": {
     "catalog": "Каталог",
     "title": "Продукция",
+    "searchResultsTitle": "Результаты поиска по «{{query}}»",
     "noProducts": "В этой категории товары не найдены.",
+    "noSearchResults": "Ничего не найдено.",
     "addToCart": "Добавить в корзину",
     "expand": "Развернуть",
     "collapse": "Свернуть",
+    "addToFavorites": "Добавить в избранное",
+    "removeFromFavorites": "Убрать из избранного",
     "detail": {
       "loading": "Загрузка...",
       "notFound": "Товар не найден.",
@@ -40,6 +46,10 @@
       "description": "Описание",
       "techParams": "Технические характеристики"
     }
+  },
+  "favorites": {
+    "title": "Избранное",
+    "empty": "Список избранного пока пуст."
   },
   "cart": {
     "title": "Корзина",
