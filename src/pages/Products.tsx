@@ -18,8 +18,14 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
-  const [categoriesLoading, setCategoriesLoading] = useState(true);
-  const [productsLoading, setProductsLoading] = useState(true);
+  // Butun sahifa bo'yicha bitta loader — Bosh sahifadagidek, faqat birinchi
+  // yuklanishda ko'rinadi (kategoriyalar VA birinchi mahsulot ro'yxati
+  // tayyor bo'lguncha), shuning uchun loader navbar/sidebar paydo bo'lishi
+  // bilan joyini o'zgartirib "sakramaydi".
+  const [initialLoading, setInitialLoading] = useState(true);
+  // Keyinchalik kategoriya almashtirilganda/qidiruvda faqat mahsulotlar
+  // ro'yxati o'rnida ko'rinadigan kichik loader.
+  const [productsLoading, setProductsLoading] = useState(false);
   const language = useLanguageStore((s) => s.language);
 
   function toggleExpand(id: string) {
@@ -36,7 +42,10 @@ export default function Products() {
       .rpc("get_category_tree", { p_locale: language })
       .then(({ data }) => {
         setCategories(data ?? []);
-        setCategoriesLoading(false);
+        // Kategoriya umuman bo'lmasa, mahsulot so'rovi hech qachon
+        // ishga tushmaydi — loader abadiy osilib qolmasligi uchun shu
+        // yerning o'zida ham yopamiz.
+        if (!data || data.length === 0) setInitialLoading(false);
       });
   }, [language]);
 
@@ -63,6 +72,7 @@ export default function Products() {
         .then(({ data }) => {
           setProducts(data ?? []);
           setProductsLoading(false);
+          setInitialLoading(false);
         });
       return;
     }
@@ -77,6 +87,7 @@ export default function Products() {
       .then(({ data }) => {
         setProducts(data ?? []);
         setProductsLoading(false);
+        setInitialLoading(false);
       });
   }, [activeCategory, searchQuery]);
 
@@ -141,7 +152,7 @@ export default function Products() {
     );
   }
 
-  if (categoriesLoading) {
+  if (initialLoading) {
     return <PageLoader />;
   }
 
