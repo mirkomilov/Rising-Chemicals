@@ -39,11 +39,12 @@ export default function Home() {
       {/* ===== HERO / CAROUSEL ===== */}
       {/* TODO: bu yerga haqiqiy slayder (masalan embla-carousel yoki swiper) qo'yiladi.
           Hozircha statik banner joylashtirilgan. */}
-      <section className="bg-gradient-to-r from-primary to-secondary/80 py-20 text-primary-foreground">
-        <div className="mx-auto max-w-7xl px-4">
-          <h1 className="text-3xl font-bold md:text-5xl">{t("home.heroTitle")}</h1>
-          <p className="mt-3 max-w-xl text-white/90">{t("home.heroSubtitle")}</p>
-        </div>
+      <section className="relative h-[420px] overflow-hidden sm:h-[520px] md:h-[640px]">
+        <img
+          src="/main-page/first.png"
+          alt="Rising Chemicals"
+          className="h-full w-full object-cover"
+        />
       </section>
 
       {/* ===== HAMKOR BRENDLAR ===== */}
