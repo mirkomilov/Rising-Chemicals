@@ -6,6 +6,16 @@ import { productName } from "@/lib/i18n";
 import { supabase } from "@/lib/supabaseClient";
 import { Minus, Plus, Trash2 } from "lucide-react";
 
+// Supabase'dan qaytadigan xatolar (PostgrestError, StorageError) doim ham
+// native Error emas — shuning uchun instanceof tekshiruvi ba'zida
+// muvaffaqiyatsiz bo'ladi. Har ikkalasidan ham xabar matnini olamiz.
+function errorMessage(err: unknown): string {
+  if (err && typeof err === "object" && "message" in err) {
+    return String((err as { message: unknown }).message);
+  }
+  return String(err);
+}
+
 export default function Cart() {
   const { t } = useTranslation();
   const { items, updateQuantity, removeItem, clearCart, totalAmount } =
@@ -68,8 +78,12 @@ export default function Cart() {
       setSuccess(true);
     } catch (err) {
       console.error(err);
-      const message = err instanceof Error ? err.message : String(err);
-      alert(`${t("cart.errorAlert")}\n\n${message}`);
+      const code = err && typeof err === "object" && "code" in err ? (err as { code: unknown }).code : null;
+      if (code === "23503") {
+        alert(t("cart.staleItemsError"));
+      } else {
+        alert(`${t("cart.errorAlert")}\n\n${errorMessage(err)}`);
+      }
     } finally {
       setSubmitting(false);
     }

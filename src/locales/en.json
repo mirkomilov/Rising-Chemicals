@@ -55,7 +55,8 @@
     "submitting": "Submitting...",
     "successTitle": "Your request has been accepted!",
     "successText": "Our specialist will contact you shortly.",
-    "errorAlert": "An error occurred. Please try again."
+    "errorAlert": "An error occurred. Please try again.",
+    "staleItemsError": "Some items in your cart are no longer available. Please remove them from your cart and try again."
   },
   "contact": {
     "title": "Contact",

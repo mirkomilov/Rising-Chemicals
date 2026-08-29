@@ -55,7 +55,8 @@
     "submitting": "Yuborilmoqda...",
     "successTitle": "Zayavkangiz qabul qilindi!",
     "successText": "Tez orada mutaxassisimiz siz bilan bog'lanadi.",
-    "errorAlert": "Xatolik yuz berdi. Qaytadan urinib ko'ring."
+    "errorAlert": "Xatolik yuz berdi. Qaytadan urinib ko'ring.",
+    "staleItemsError": "Savatchangizdagi ba'zi mahsulotlar endi mavjud emas. Iltimos, ularni savatchadan olib tashlang va qayta urinib ko'ring."
   },
   "contact": {
     "title": "Aloqa",
