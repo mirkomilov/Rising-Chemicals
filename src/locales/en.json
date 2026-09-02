@@ -11,12 +11,10 @@
     "toggleLanguage": "Change language"
   },
   "footer": {
-    "tagline": "Quality chemical products — at reliable prices with precise technical specifications.",
+    "tagline": "Quality chemical products for industry and laboratories — reliable prices, precise technical specifications and fast delivery.",
+    "quickLinksTitle": "Quick links",
     "contactTitle": "Contact",
-    "phone": "Phone: +998 XX XXX XX XX",
-    "email": "Email: info@risingchemicals.uz",
-    "address": "Address: Tashkent",
-    "socialTitle": "Social media",
+    "addressValue": "Tashkent",
     "rights": "© {{year}} Rising Chemicals. All rights reserved."
   },
   "home": {
@@ -26,7 +24,15 @@
     "noCatalog": "No categories added yet.",
     "partnersTitle": "Partner brands",
     "aboutTitle": "About us",
-    "aboutText": "Rising Chemicals is a trusted supplier in the industrial chemistry field. We offer our customers quality products at affordable prices with accurate technical data.",
+    "aboutText": "Rising Chemicals is a trusted supplier in Uzbekistan's industrial chemistry market. We deliver reagents, solvents, calibration gas mixtures and other specialized chemical products to laboratories, manufacturing plants and industrial facilities. Every product comes with precise technical data, backed by fast and reliable delivery nationwide.",
+    "aboutFeature1Title": "Wide assortment",
+    "aboutFeature1Text": "Hundreds of items — from reagents to calibration gas mixtures.",
+    "aboutFeature2Title": "Quality guarantee",
+    "aboutFeature2Text": "All products are certified and supplied with technical documentation.",
+    "aboutFeature3Title": "Fast delivery",
+    "aboutFeature3Text": "Convenient, on-time delivery across Uzbekistan.",
+    "aboutFeature4Title": "Expert support",
+    "aboutFeature4Text": "Our specialists help you choose the right product.",
     "topProductsTitle": "Best-selling products",
     "noTopProducts": "No top products marked yet."
   },

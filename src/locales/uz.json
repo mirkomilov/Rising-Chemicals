@@ -11,12 +11,10 @@
     "toggleLanguage": "Tilni almashtirish"
   },
   "footer": {
-    "tagline": "Sifatli kimyoviy mahsulotlar — ishonchli narxlarda va texnik xususiyatlari bilan.",
+    "tagline": "Sanoat va laboratoriya uchun sifatli kimyoviy mahsulotlar — ishonchli narxlarda, aniq texnik xususiyatlari va tez yetkazib berish bilan.",
+    "quickLinksTitle": "Tezkor havolalar",
     "contactTitle": "Aloqa",
-    "phone": "Tel: +998 XX XXX XX XX",
-    "email": "Email: info@risingchemicals.uz",
-    "address": "Manzil: Toshkent sh.",
-    "socialTitle": "Ijtimoiy tarmoqlar",
+    "addressValue": "Toshkent sh.",
     "rights": "© {{year}} Rising Chemicals. Barcha huquqlar himoyalangan."
   },
   "home": {
@@ -26,7 +24,15 @@
     "noCatalog": "Hozircha kategoriya qo'shilmagan.",
     "partnersTitle": "Hamkor brendlar",
     "aboutTitle": "Firma haqida",
-    "aboutText": "Rising Chemicals — sanoat kimyosi sohasida ishonchli yetkazib beruvchi. Biz mijozlarimizga sifatli mahsulotlarni qulay narxlarda va aniq texnik ma'lumotlar bilan taqdim etamiz.",
+    "aboutText": "Rising Chemicals — O'zbekiston sanoat kimyosi bozorida ishonchli hamkor sifatida tan olingan yetkazib beruvchi kompaniya. Biz laboratoriyalar, ishlab chiqarish korxonalari va sanoat zavodlari uchun reaktivlar, erituvchilar, kalibrlash gaz aralashmalari (ПГС) va boshqa maxsus kimyoviy mahsulotlarni yetkazib beramiz. Har bir mahsulot aniq texnik xususiyatlari bilan taqdim etiladi, buyurtmalar esa O'zbekiston bo'ylab tez va ishonchli yetkaziladi.",
+    "aboutFeature1Title": "Keng assortiment",
+    "aboutFeature1Text": "Reaktivlardan tortib gaz aralashmalarigacha yuzlab nomdagi mahsulotlar.",
+    "aboutFeature2Title": "Sifat kafolati",
+    "aboutFeature2Text": "Barcha mahsulotlar sertifikatlangan va texnik hujjatlar bilan ta'minlangan.",
+    "aboutFeature3Title": "Tez yetkazib berish",
+    "aboutFeature3Text": "O'zbekiston bo'ylab qulay va o'z vaqtida yetkazib berish xizmati.",
+    "aboutFeature4Title": "Texnik maslahat",
+    "aboutFeature4Text": "Mutaxassislarimiz mahsulot tanlashda yordam beradi.",
     "topProductsTitle": "Ko'p sotiladigan mahsulotlar",
     "noTopProducts": "Hozircha top mahsulotlar belgilanmagan."
   },

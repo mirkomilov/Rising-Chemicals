@@ -1,5 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { Phone, Mail, MapPin, Send } from "lucide-react";
+import { Phone, Mail, MapPin, Send, Instagram } from "lucide-react";
+
+const TELEGRAM_URL = "https://t.me/risingchemicals";
+const INSTAGRAM_URL = "https://www.instagram.com/risingchemicals/";
+const PHONE_DISPLAY = "+998 88 888 28 38";
+const PHONE_HREF = "tel:+998888882838";
+const EMAIL = "info@risingchemicals.uz";
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -24,14 +30,18 @@ export default function Contact() {
             <Phone className="mt-0.5 h-5 w-5 text-primary" />
             <div>
               <p className="font-medium">{t("contact.phoneTitle")}</p>
-              <p className="text-sm text-muted-foreground">+998 XX XXX XX XX</p>
+              <a href={PHONE_HREF} className="text-sm text-muted-foreground hover:text-primary">
+                {PHONE_DISPLAY}
+              </a>
             </div>
           </div>
           <div className="flex items-start gap-3">
             <Mail className="mt-0.5 h-5 w-5 text-primary" />
             <div>
               <p className="font-medium">{t("contact.emailTitle")}</p>
-              <p className="text-sm text-muted-foreground">info@risingchemicals.uz</p>
+              <a href={`mailto:${EMAIL}`} className="text-sm text-muted-foreground hover:text-primary">
+                {EMAIL}
+              </a>
             </div>
           </div>
           <div className="flex items-start gap-3">
@@ -39,8 +49,22 @@ export default function Contact() {
             <div>
               <p className="font-medium">{t("contact.socialTitle")}</p>
               <div className="flex gap-3 text-sm text-muted-foreground">
-                <a href="#" className="hover:text-primary">Telegram</a>
-                <a href="#" className="hover:text-primary">Instagram</a>
+                <a
+                  href={TELEGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-primary"
+                >
+                  <Send className="h-3.5 w-3.5" /> Telegram
+                </a>
+                <a
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 hover:text-primary"
+                >
+                  <Instagram className="h-3.5 w-3.5" /> Instagram
+                </a>
               </div>
             </div>
           </div>

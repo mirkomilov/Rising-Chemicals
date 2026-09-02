@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { FlaskConical, ShieldCheck, Truck, Headset } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import type { Product } from "@/types/database.types";
 import { useLanguageStore } from "@/store/languageStore";
@@ -89,6 +90,26 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4">
           <h2 className="mb-3 text-xl font-semibold">{t("home.aboutTitle")}</h2>
           <p className="max-w-3xl text-muted-foreground">{t("home.aboutText")}</p>
+
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { icon: FlaskConical, title: t("home.aboutFeature1Title"), text: t("home.aboutFeature1Text") },
+              { icon: ShieldCheck, title: t("home.aboutFeature2Title"), text: t("home.aboutFeature2Text") },
+              { icon: Truck, title: t("home.aboutFeature3Title"), text: t("home.aboutFeature3Text") },
+              { icon: Headset, title: t("home.aboutFeature4Title"), text: t("home.aboutFeature4Text") },
+            ].map(({ icon: Icon, title, text }) => (
+              <div
+                key={title}
+                className="rounded-lg border border-border bg-card p-4 shadow-sm"
+              >
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <p className="mb-1 font-medium">{title}</p>
+                <p className="text-sm text-muted-foreground">{text}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </div>
