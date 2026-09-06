@@ -1,12 +1,25 @@
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const SLIDES = Array.from({ length: 9 }, (_, i) => `/main-page/image${i + 1}.png`);
+const SLIDES = Array.from({ length: 9 }, (_, i) => `/main-page/image${i + 1}.webp`);
 
 const AUTO_ADVANCE_MS = 5000;
 
 export default function HeroCarousel() {
   const [active, setActive] = useState(0);
+  // Faqat ko'rilgan/ko'rilishi kutilayotgan slaydlarni yuklaymiz, 9 tasini birdan emas.
+  const [loaded, setLoaded] = useState<Set<number>>(() => new Set([0, 1 % SLIDES.length]));
+
+  useEffect(() => {
+    setLoaded((prev) => {
+      const nextActive = (active + 1) % SLIDES.length;
+      if (prev.has(active) && prev.has(nextActive)) return prev;
+      const next = new Set(prev);
+      next.add(active);
+      next.add(nextActive);
+      return next;
+    });
+  }, [active]);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -32,19 +45,28 @@ export default function HeroCarousel() {
             i === active ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* fon: butun konteynerni to'ldiruvchi xiralashgan nusxa */}
-          <img
-            src={src}
-            alt=""
-            aria-hidden
-            className="h-full w-full scale-110 object-cover blur-2xl"
-          />
-          {/* old plan: rasm to'liq, kesilmagan holda ko'rinadi */}
-          <img
-            src={src}
-            alt="Rising Chemicals"
-            className="absolute inset-0 h-full w-full object-contain"
-          />
+          {loaded.has(i) && (
+            <>
+              {/* fon: butun konteynerni to'ldiruvchi xiralashgan nusxa */}
+              <img
+                src={src}
+                alt=""
+                aria-hidden
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                className="h-full w-full scale-110 object-cover blur-2xl"
+              />
+              {/* old plan: rasm to'liq, kesilmagan holda ko'rinadi */}
+              <img
+                src={src}
+                alt="Rising Chemicals"
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                fetchPriority={i === 0 ? "high" : "auto"}
+                className="absolute inset-0 h-full w-full object-contain"
+              />
+            </>
+          )}
         </div>
       ))}
 

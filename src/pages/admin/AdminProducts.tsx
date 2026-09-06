@@ -5,6 +5,7 @@ import type { Product, Category, Brand, Locale } from "@/types/database.types";
 import { productName } from "@/lib/i18n";
 import { useLanguageStore } from "@/store/languageStore";
 import { categoryDisplayName, categoryPathIds } from "@/lib/categoryTree";
+import { toOptimizedWebp } from "@/lib/imageOptimize";
 import { cn } from "@/lib/utils";
 import { Plus, Trash2, Pencil, Upload, X } from "lucide-react";
 import PageLoader from "@/components/PageLoader";
@@ -205,7 +206,8 @@ export default function AdminProducts() {
     setUploadingImage(true);
     try {
       const uploaded: string[] = [];
-      for (const file of files) {
+      for (const rawFile of files) {
+        const file = await toOptimizedWebp(rawFile);
         const ext = file.name.split(".").pop();
         const path = `${crypto.randomUUID()}.${ext}`;
         const { error } = await supabase.storage
