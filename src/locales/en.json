@@ -12,9 +12,10 @@
   },
   "footer": {
     "tagline": "Quality chemical products for industry and laboratories — reliable prices, precise technical specifications and fast delivery.",
+    "socialTitle": "Social media",
     "quickLinksTitle": "Quick links",
     "contactTitle": "Contact",
-    "addressValue": "Tashkent",
+    "addressValue": "Tashkent city, Bektemir district",
     "rights": "© {{year}} Rising Chemicals. All rights reserved."
   },
   "home": {
@@ -78,7 +79,7 @@
   "contact": {
     "title": "Contact",
     "addressTitle": "Address",
-    "addressValue": "Tashkent city, ...",
+    "addressValue": "Tashkent city, Bektemir district",
     "phoneTitle": "Phone",
     "emailTitle": "Email",
     "socialTitle": "Social media",

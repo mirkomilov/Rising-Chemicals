@@ -12,9 +12,10 @@
   },
   "footer": {
     "tagline": "Sanoat va laboratoriya uchun sifatli kimyoviy mahsulotlar — ishonchli narxlarda, aniq texnik xususiyatlari va tez yetkazib berish bilan.",
+    "socialTitle": "Ijtimoiy tarmoqlar",
     "quickLinksTitle": "Tezkor havolalar",
     "contactTitle": "Aloqa",
-    "addressValue": "Toshkent sh.",
+    "addressValue": "Toshkent shahri, Bektemir tumani",
     "rights": "© {{year}} Rising Chemicals. Barcha huquqlar himoyalangan."
   },
   "home": {
@@ -78,7 +79,7 @@
   "contact": {
     "title": "Aloqa",
     "addressTitle": "Manzil",
-    "addressValue": "Toshkent shahri, ...",
+    "addressValue": "Toshkent shahri, Bektemir tumani",
     "phoneTitle": "Telefon",
     "emailTitle": "Email",
     "socialTitle": "Ijtimoiy tarmoqlar",

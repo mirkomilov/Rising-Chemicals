@@ -1,42 +1,51 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Send, Instagram } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import { FaTelegramPlane, FaInstagram, FaFacebookF, FaWhatsapp } from "react-icons/fa";
 
 const TELEGRAM_URL = "https://t.me/risingchemicals";
 const INSTAGRAM_URL = "https://www.instagram.com/risingchemicals/";
+const FACEBOOK_URL = "https://www.facebook.com/risingchemicals/";
+const WHATSAPP_URL = "https://wa.me/998888882838";
 const PHONE_DISPLAY = "+998 88 888 28 38";
 const PHONE_HREF = "tel:+998888882838";
 const EMAIL = "info@risingchemicals.uz";
+
+const SOCIAL_LINKS = [
+  { href: TELEGRAM_URL, label: "Telegram", icon: FaTelegramPlane },
+  { href: INSTAGRAM_URL, label: "Instagram", icon: FaInstagram },
+  { href: FACEBOOK_URL, label: "Facebook", icon: FaFacebookF },
+  { href: WHATSAPP_URL, label: "WhatsApp", icon: FaWhatsapp },
+];
 
 export default function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="mt-20 border-t border-border bg-muted/40">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 md:grid-cols-4">
-        <div className="md:col-span-2">
+    <footer className="border-t border-border bg-muted/40">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-10 lg:flex lg:items-start lg:justify-between lg:gap-8">
+        <div className="col-span-2 lg:col-span-1 lg:max-w-xs">
           <img src="/rising-logo.png" alt="Rising Chemicals" className="mb-3 h-11 w-auto" />
-          <p className="max-w-sm text-sm text-muted-foreground">{t("footer.tagline")}</p>
-          <div className="mt-5 flex gap-3">
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Telegram"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition hover:-translate-y-0.5 hover:border-primary hover:bg-primary hover:text-primary-foreground"
-            >
-              <Send className="h-4 w-4" />
-            </a>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition hover:-translate-y-0.5 hover:border-primary hover:bg-primary hover:text-primary-foreground"
-            >
-              <Instagram className="h-4 w-4" />
-            </a>
-          </div>
+          <p className="max-w-sm text-[15px] text-muted-foreground">{t("footer.tagline")}</p>
+        </div>
+
+        <div>
+          <h4 className="mb-3 font-semibold">{t("footer.socialTitle")}</h4>
+          <ul className="space-y-3 text-sm text-muted-foreground">
+            {SOCIAL_LINKS.map(({ href, label, icon: Icon }) => (
+              <li key={label} className="flex items-start gap-2">
+                <Icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition hover:text-primary"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div>
@@ -83,7 +92,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-border py-4 text-center text-xs text-muted-foreground">
+      <div className="border-t border-border py-3 text-center text-xs text-muted-foreground">
         {t("footer.rights", { year: new Date().getFullYear() })}
       </div>
     </footer>

@@ -37,7 +37,7 @@ export default function HeroCarousel() {
   }
 
   return (
-    <div className="relative h-[420px] w-full flex-1 overflow-hidden rounded-lg bg-muted sm:h-[520px] md:h-[640px]">
+    <div className="relative h-[420px] w-full overflow-hidden rounded-lg bg-muted sm:h-[520px] md:h-[640px] md:flex-1">
       {SLIDES.map((src, i) => (
         <div
           key={src}

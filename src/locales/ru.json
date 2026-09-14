@@ -12,9 +12,10 @@
   },
   "footer": {
     "tagline": "Качественная химическая продукция для промышленности и лабораторий — надёжные цены, точные технические характеристики и быстрая доставка.",
+    "socialTitle": "Соцсети",
     "quickLinksTitle": "Быстрые ссылки",
     "contactTitle": "Контакты",
-    "addressValue": "г. Ташкент",
+    "addressValue": "г. Ташкент, Бектемирский район",
     "rights": "© {{year}} Rising Chemicals. Все права защищены."
   },
   "home": {
@@ -78,7 +79,7 @@
   "contact": {
     "title": "Контакты",
     "addressTitle": "Адрес",
-    "addressValue": "г. Ташкент, ...",
+    "addressValue": "г. Ташкент, Бектемирский район",
     "phoneTitle": "Телефон",
     "emailTitle": "Email",
     "socialTitle": "Соцсети",
