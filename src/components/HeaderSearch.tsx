@@ -5,6 +5,7 @@ import { Search, X } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { useLanguageStore } from "@/store/languageStore";
 import type { Locale } from "@/types/database.types";
+import { cn } from "@/lib/utils";
 
 interface SearchResult {
   id: string;
@@ -26,7 +27,16 @@ function localized(
   return obj[`name_${locale}`] || obj.name_ru || obj.name_uz || obj.name_en || "";
 }
 
-export default function HeaderSearch() {
+interface HeaderSearchProps {
+  /** Mobil menyu paneli ichida to'liq kenglikda ko'rsatish uchun (desktop
+   *  navbardagi ixcham, faqat md+ ekranlarda ko'rinadigan versiya o'rniga). */
+  mobile?: boolean;
+  /** Natija tanlanganda yoki qidiruv yuborilganda chaqiriladi — mobil
+   *  menyuni yopish uchun ishlatiladi. */
+  onNavigate?: () => void;
+}
+
+export default function HeaderSearch({ mobile = false, onNavigate }: HeaderSearchProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const language = useLanguageStore((s) => s.language);
@@ -72,6 +82,7 @@ export default function HeaderSearch() {
     setOpen(false);
     setQuery("");
     navigate(`/products/${id}`);
+    onNavigate?.();
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -79,10 +90,14 @@ export default function HeaderSearch() {
     const q = query.trim();
     setOpen(false);
     navigate(q ? `/products?q=${encodeURIComponent(q)}` : "/products");
+    onNavigate?.();
   }
 
   return (
-    <div ref={containerRef} className="relative hidden md:block md:w-40 lg:w-52">
+    <div
+      ref={containerRef}
+      className={cn("relative", mobile ? "block w-full" : "hidden lg:block lg:w-48 xl:w-52")}
+    >
       <form onSubmit={handleSubmit}>
         <div className="group relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground transition-colors group-focus-within:text-primary" />
@@ -111,7 +126,12 @@ export default function HeaderSearch() {
       </form>
 
       {open && query.trim() && (
-        <div className="absolute right-0 top-full z-50 mt-2 max-h-96 w-80 overflow-y-auto rounded-lg border border-border bg-background shadow-lg">
+        <div
+          className={cn(
+            "absolute top-full z-50 mt-2 max-h-96 overflow-y-auto rounded-lg border border-border bg-background shadow-lg",
+            mobile ? "left-0 right-0 w-full" : "right-0 w-80"
+          )}
+        >
           {results.length === 0 ? (
             <p className="p-4 text-sm text-muted-foreground">
               {t("products.noSearchResults")}

@@ -33,6 +33,18 @@ function productLabel(
   return p[`name_${locale}`] || p.name_ru || p.name_uz || p.name_en;
 }
 
+// AM/PM o'rniga 24 soatlik format bilan ko'rsatish uchun.
+function formatDateTime(value: string): string {
+  return new Date(value).toLocaleString("uz-UZ", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+}
+
 export default function AdminOrders() {
   const { t } = useTranslation();
   const language = useLanguageStore((s) => s.language);
@@ -111,7 +123,7 @@ export default function AdminOrders() {
               >
                 <td className="p-3">{o.customers?.full_name ?? "—"}</td>
                 <td className="p-3">{o.customers?.phone ?? "—"}</td>
-                <td className="p-3">{new Date(o.created_at).toLocaleString()}</td>
+                <td className="p-3">{formatDateTime(o.created_at)}</td>
                 <td className="p-3">
                   <span
                     className={`rounded-md px-2 py-1 text-xs font-medium ${statusColor[o.status]}`}
@@ -161,7 +173,7 @@ export default function AdminOrders() {
               </p>
               <p>
                 <span className="text-muted-foreground">{t("admin.orders.date")}: </span>
-                {new Date(selectedOrder.created_at).toLocaleString()}
+                {formatDateTime(selectedOrder.created_at)}
               </p>
               <p>
                 <span className="text-muted-foreground">{t("admin.orders.comment")}: </span>

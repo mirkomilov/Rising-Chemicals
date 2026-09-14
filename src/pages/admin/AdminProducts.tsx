@@ -1,14 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
 import type { Product, Category, Brand, Locale } from "@/types/database.types";
 import { productName } from "@/lib/i18n";
 import { useLanguageStore } from "@/store/languageStore";
-import { categoryDisplayName, categoryPathIds } from "@/lib/categoryTree";
+import {
+  categoryDisplayName,
+  categoryPathIds,
+  collectSelfAndDescendantIds,
+  flattenCategoryTree,
+} from "@/lib/categoryTree";
 import { toOptimizedWebp } from "@/lib/imageOptimize";
 import { cn } from "@/lib/utils";
-import { Plus, Trash2, Pencil, Upload, X } from "lucide-react";
+import { Plus, Trash2, Pencil, Upload, X, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import PageLoader from "@/components/PageLoader";
+
+const PAGE_SIZE_OPTIONS = [10, 20, 50];
 
 const LOCALES: Locale[] = ["uz", "ru", "en"];
 const LOCALE_LABELS: Record<Locale, string> = { uz: "UZ", ru: "RU", en: "EN" };
@@ -92,6 +99,10 @@ export default function AdminProducts() {
   const [activeLocale, setActiveLocale] = useState<Locale>("ru");
   const [uploadingImage, setUploadingImage] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
 
   async function loadAll() {
     const [{ data: p }, { data: c }, { data: b }] = await Promise.all([
@@ -107,6 +118,38 @@ export default function AdminProducts() {
   useEffect(() => {
     loadAll().finally(() => setLoading(false));
   }, []);
+
+  const categoryOptions = useMemo(
+    () => flattenCategoryTree(categories, language),
+    [categories, language]
+  );
+
+  const filteredProducts = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    const categoryIds = categoryFilter
+      ? collectSelfAndDescendantIds(categories, categoryFilter)
+      : null;
+
+    return products.filter((p) => {
+      if (categoryIds && (!p.category_id || !categoryIds.has(p.category_id))) return false;
+      if (!query) return true;
+      const haystack = `${p.name_uz ?? ""} ${p.name_ru ?? ""} ${p.name_en ?? ""}`.toLowerCase();
+      return haystack.includes(query);
+    });
+  }, [products, search, categoryFilter, categories]);
+
+  // Filtr yoki sahifa hajmi o'zgarganda birinchi sahifaga qaytamiz —
+  // aks holda foydalanuvchi bo'sh sahifada qolib ketishi mumkin.
+  useEffect(() => {
+    setPage(1);
+  }, [search, categoryFilter, pageSize]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredProducts.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const pageProducts = filteredProducts.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   function resetForm() {
     setForm(emptyForm);
@@ -446,6 +489,32 @@ export default function AdminProducts() {
         </form>
       )}
 
+      {/* ===== QIDIRUV + KATEGORIYA FILTRI ===== */}
+      <div className="mb-4 flex flex-wrap items-center gap-3">
+        <div className="relative min-w-[220px] flex-1">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={t("admin.products.searchPlaceholder")}
+            className="w-full rounded-md border border-input bg-background py-2 pl-9 pr-3 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+          />
+        </div>
+        <select
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          className="min-w-[200px] rounded-md border border-input bg-background px-3 py-2 text-sm"
+        >
+          <option value="">{t("admin.products.allCategories")}</option>
+          {categoryOptions.map((c) => (
+            <option key={c.id} value={c.id}>
+              {"  ".repeat(c.depth)}
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-sm">
           <thead className="bg-muted text-left">
@@ -458,8 +527,15 @@ export default function AdminProducts() {
             </tr>
           </thead>
           <tbody>
-            {products.map((p) => (
-              <tr key={p.id} className="border-t border-border">
+            {pageProducts.length === 0 && (
+              <tr>
+                <td colSpan={5} className="p-6 text-center text-muted-foreground">
+                  {t("admin.products.noResults")}
+                </td>
+              </tr>
+            )}
+            {pageProducts.map((p) => (
+              <tr key={p.id} className="border-t border-border transition-colors hover:bg-muted/50">
                 <td className="p-3">{productName(p, language)}</td>
                 <td className="p-3">
                   {p.price.toLocaleString()} {t("common.currency")}
@@ -479,6 +555,57 @@ export default function AdminProducts() {
           </tbody>
         </table>
       </div>
+
+      {/* ===== PAGINATION ===== */}
+      {filteredProducts.length > 0 && (
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span>{t("admin.products.pageSizeLabel")}</span>
+            <select
+              value={pageSize}
+              onChange={(e) => setPageSize(Number(e.target.value))}
+              className="rounded-md border border-input bg-background px-2 py-1.5 text-sm"
+            >
+              {PAGE_SIZE_OPTIONS.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+            </select>
+            <span>
+              {t("admin.products.pageInfo", {
+                from: (currentPage - 1) * pageSize + 1,
+                to: Math.min(currentPage * pageSize, filteredProducts.length),
+                total: filteredProducts.length,
+              })}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="flex items-center gap-1 rounded-md border border-border px-2.5 py-1.5 transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              {t("admin.products.prevPage")}
+            </button>
+            <span className="px-2 font-medium text-foreground">
+              {currentPage} / {totalPages}
+            </span>
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={currentPage === totalPages}
+              className="flex items-center gap-1 rounded-md border border-border px-2.5 py-1.5 transition-colors hover:bg-muted disabled:pointer-events-none disabled:opacity-40"
+            >
+              {t("admin.products.nextPage")}
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

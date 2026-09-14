@@ -1,0 +1,10 @@
+# Domen sotib olingach shu Sitemap manzilini yangilang (src/lib/seo.ts
+# ichidagi VITE_SITE_URL/FALLBACK_SITE_URL bilan bir xil bo'lsin) —
+# bu fayl static bo'lgani uchun avtomatik yangilanmaydi.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /cart
+Disallow: /favorites
+
+Sitemap: https://risingchemicals.uz/sitemap.xml

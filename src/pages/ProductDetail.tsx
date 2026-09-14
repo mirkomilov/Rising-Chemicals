@@ -9,6 +9,7 @@ import { useFavoritesStore } from "@/store/favoritesStore";
 import { useLanguageStore } from "@/store/languageStore";
 import { productName, productDescription, productTechParams } from "@/lib/i18n";
 import PageLoader from "@/components/PageLoader";
+import Seo from "@/components/Seo";
 import { cn } from "@/lib/utils";
 
 export default function ProductDetail() {
@@ -44,6 +45,7 @@ export default function ProductDetail() {
   if (!product) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-16 text-center">
+        <Seo title={t("products.detail.notFound")} noindex />
         <p className="text-muted-foreground">{t("products.detail.notFound")}</p>
         <Link to="/products" className="mt-4 inline-block text-primary hover:underline">
           {t("products.detail.back")}
@@ -58,6 +60,7 @@ export default function ProductDetail() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
+      <Seo title={productName(product, language)} />
       <Link
         to="/products"
         className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary"
@@ -85,8 +88,10 @@ export default function ProductDetail() {
                   type="button"
                   onClick={() => setActiveImage(idx)}
                   className={cn(
-                    "h-16 w-16 overflow-hidden rounded-md border-2",
-                    idx === activeImage ? "border-primary" : "border-transparent"
+                    "h-16 w-16 overflow-hidden rounded-md border-2 transition-colors duration-200",
+                    idx === activeImage
+                      ? "border-primary"
+                      : "border-transparent hover:border-primary/40"
                   )}
                 >
                   <img src={url} alt="" className="h-full w-full object-cover" />
@@ -109,7 +114,12 @@ export default function ProductDetail() {
               }
               className="shrink-0 rounded-md p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-red-500"
             >
-              <Heart className={cn("h-6 w-6", isFavorite && "fill-red-500 text-red-500")} />
+              <Heart
+                className={cn(
+                  "h-6 w-6 transition-transform duration-200 hover:scale-110",
+                  isFavorite && "fill-red-500 text-red-500"
+                )}
+              />
             </button>
           </div>
           <p className="mt-2 text-2xl font-semibold text-primary">
@@ -144,7 +154,7 @@ export default function ProductDetail() {
 
           <button
             onClick={() => addItem(product)}
-            className="mt-6 w-full rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground hover:opacity-90 sm:w-auto"
+            className="mt-6 w-full rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground transition hover:opacity-90 active:scale-95 sm:w-auto"
           >
             {t("products.addToCart")}
           </button>

@@ -37,10 +37,10 @@ export default function CatalogSidebar() {
             key={c.id}
             type="button"
             onClick={() => navigate(`/products?category=${c.id}`)}
-            className="flex w-full items-center justify-between gap-2 px-4 py-3 text-left text-sm transition hover:bg-white/10"
+            className="group flex w-full items-center justify-between gap-2 px-4 py-3 text-left text-sm transition-colors duration-200 hover:bg-white/10"
           >
-            <span className="line-clamp-2">{c.name}</span>
-            <ChevronRight className="h-4 w-4 shrink-0 opacity-70" />
+            <span className="line-clamp-2 transition-transform duration-200 group-hover:translate-x-0.5">{c.name}</span>
+            <ChevronRight className="h-4 w-4 shrink-0 opacity-70 transition-transform duration-200 group-hover:translate-x-1 group-hover:opacity-100" />
           </button>
         ))}
       </nav>

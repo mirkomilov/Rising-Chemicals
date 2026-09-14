@@ -4,3 +4,13 @@ dist
 .env.local
 *.log
 .DS_Store
+
+# TypeScript incremental build cache — avtomatik generatsiya qilinadi,
+# commit qilish shart emas (vite.config.ts uchun tsconfig.node.json'ning
+# "composite" rejimi talab qiladigan, lekin hech kim ishlatmaydigan chiqish).
+*.tsbuildinfo
+.tsc-out
+
+# Har bir build'da scripts/generate-sitemap.mjs orqali avtomatik
+# generatsiya qilinadi — qo'lda commit qilish shart emas.
+public/sitemap.xml

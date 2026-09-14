@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Outlet, NavLink, Navigate } from "react-router-dom";
+import { Outlet, NavLink, Navigate, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
@@ -8,12 +8,15 @@ import {
   ClipboardList,
   BarChart3,
   LogOut,
+  Menu,
+  X,
 } from "lucide-react";
 import { supabase } from "@/lib/supabaseClient";
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import ThemeToggle from "@/components/ThemeToggle";
 import PageLoader from "@/components/PageLoader";
+import Seo from "@/components/Seo";
 
 const links = [
   { to: "/admin", labelKey: "admin.layout.dashboard", icon: LayoutDashboard, end: true },
@@ -25,8 +28,10 @@ const links = [
 
 export default function AdminLayout() {
   const { t } = useTranslation();
+  const location = useLocation();
   const [loading, setLoading] = useState(true);
   const [authed, setAuthed] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -39,8 +44,18 @@ export default function AdminLayout() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  // Sahifa (admin sub-route) almashganda mobil sidebar avtomatik yopiladi.
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
   if (loading) {
-    return <PageLoader />;
+    return (
+      <>
+        <Seo title="Admin" noindex />
+        <PageLoader />
+      </>
+    );
   }
 
   // Admin sessiyasi yo'q bo'lsa login sahifasiga yo'naltiramiz
@@ -50,12 +65,39 @@ export default function AdminLayout() {
 
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      <aside className="w-64 shrink-0 border-r border-border bg-card">
-        <div className="flex h-16 items-center border-b border-border px-5">
+      {/* Admin panelning barcha ichki sahifalari (Outlet orqali) shu
+          Helmet'dan meros oladi — qidiruv tizimlari indexlamasligi kerak. */}
+      <Seo title="Admin" noindex />
+
+      {/* Mobil/tablet ekranlarda sidebar ekrandan tashqarida turadi va
+          hamburger tugma bosilganda ustidan drawer sifatida chiqadi;
+          desktopda (md+) avvalgidek doim ko'rinadigan sobit ustun. */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-black/40 md:hidden"
+          aria-hidden
+        />
+      )}
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-50 w-64 shrink-0 border-r border-border bg-card transition-transform duration-200 md:static md:z-auto md:translate-x-0",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="flex h-16 items-center justify-between border-b border-border px-5">
           <span className="text-lg font-bold">
             <span className="text-primary">RISING</span>{" "}
             <span className="text-secondary">{t("admin.layout.brand")}</span>
           </span>
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(false)}
+            aria-label={t("header.closeMenu")}
+            className="rounded-md p-1.5 text-muted-foreground hover:bg-muted md:hidden"
+          >
+            <X className="h-5 w-5" />
+          </button>
         </div>
         <nav className="flex flex-col gap-1 p-3">
           {links.map(({ to, labelKey, icon: Icon, end }) => (
@@ -86,12 +128,22 @@ export default function AdminLayout() {
         </nav>
       </aside>
 
-      <main className="flex flex-1 flex-col">
-        <div className="flex h-16 shrink-0 items-center justify-end gap-2 border-b border-border bg-card px-6">
-          <LanguageSwitcher />
-          <ThemeToggle />
+      <main className="flex min-w-0 flex-1 flex-col">
+        <div className="flex h-16 shrink-0 items-center gap-2 border-b border-border bg-card px-4 sm:px-6">
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            aria-label={t("header.openMenu")}
+            className="rounded-md p-2 text-muted-foreground hover:bg-muted md:hidden"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+          <div className="ml-auto flex items-center gap-2">
+            <LanguageSwitcher />
+            <ThemeToggle />
+          </div>
         </div>
-        <div className="flex-1 p-6">
+        <div className="flex-1 overflow-x-auto p-4 sm:p-6">
           <Outlet />
         </div>
       </main>

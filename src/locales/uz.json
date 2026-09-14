@@ -8,7 +8,9 @@
     "searchPlaceholder": "Mahsulot qidirish...",
     "clearSearch": "Tozalash",
     "toggleTheme": "Temani almashtirish",
-    "toggleLanguage": "Tilni almashtirish"
+    "toggleLanguage": "Tilni almashtirish",
+    "openMenu": "Menyuni ochish",
+    "closeMenu": "Menyuni yopish"
   },
   "footer": {
     "tagline": "Sanoat va laboratoriya uchun sifatli kimyoviy mahsulotlar — ishonchli narxlarda, aniq texnik xususiyatlari va tez yetkazib berish bilan.",
@@ -143,7 +145,14 @@
       "tablePrice": "Narxi",
       "tableQuantity": "Soni",
       "tableTop": "Top",
-      "confirmDelete": "Mahsulotni o'chirishga ishonchingiz komilmi?"
+      "confirmDelete": "Mahsulotni o'chirishga ishonchingiz komilmi?",
+      "searchPlaceholder": "Mahsulot nomi bo'yicha qidirish...",
+      "allCategories": "Barcha kategoriyalar",
+      "noResults": "Hech narsa topilmadi.",
+      "pageSizeLabel": "Sahifada:",
+      "pageInfo": "{{from}}-{{to}} / {{total}} ta",
+      "prevPage": "Oldingi",
+      "nextPage": "Keyingi"
     },
     "categories": {
       "title": "Kategoriyalar",

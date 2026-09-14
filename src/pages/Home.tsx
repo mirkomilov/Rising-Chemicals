@@ -10,6 +10,8 @@ import PageLoader from "@/components/PageLoader";
 import HeroCarousel from "@/components/HeroCarousel";
 import CatalogSidebar from "@/components/CatalogSidebar";
 import BrandsMarquee from "@/components/BrandsMarquee";
+import Seo from "@/components/Seo";
+import { SITE_NAME } from "@/lib/seo";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -31,11 +33,17 @@ export default function Home() {
   }, []);
 
   if (loading) {
-    return <PageLoader />;
+    return (
+      <>
+        <Seo title={SITE_NAME} />
+        <PageLoader />
+      </>
+    );
   }
 
   return (
     <div>
+      <Seo title={SITE_NAME} />
       {/* ===== KATALOG + HERO / CAROUSEL ===== */}
       {/* min-h to'ldiradi + markazlaydi, shu bilan header/quti va quti/keyingi bo'lim orasidagi bo'shliq doim teng bo'ladi va bo'lim ekran ostiga chiqib qolmaydi */}
       <section className="mx-auto flex min-h-[calc(100vh-81px)] max-w-7xl items-center px-4 py-6">
@@ -70,9 +78,9 @@ export default function Home() {
             ].map(({ icon: Icon, title, text }) => (
               <div
                 key={title}
-                className="rounded-lg border border-border bg-card p-4 shadow-sm"
+                className="group rounded-lg border border-border bg-card p-4 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
               >
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-md bg-primary/10 text-primary transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground">
                   <Icon className="h-5 w-5" />
                 </div>
                 <p className="mb-1 font-medium">{title}</p>
@@ -95,18 +103,18 @@ export default function Home() {
               <Link
                 key={p.id}
                 to={`/products/${p.id}`}
-                className="block rounded-lg border border-border bg-card p-3 transition hover:shadow-md"
+                className="group block rounded-lg border border-border bg-card p-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
               >
                 <div className="mb-2 aspect-square overflow-hidden rounded-md bg-muted">
                   {p.image_urls?.[0] && (
                     <img
                       src={p.image_urls[0]}
                       alt={productName(p, language)}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
                     />
                   )}
                 </div>
-                <p className="line-clamp-2 text-sm font-medium">
+                <p className="line-clamp-2 text-sm font-medium transition-colors group-hover:text-primary">
                   {productName(p, language)}
                 </p>
                 <p className="mt-1 font-semibold text-primary">

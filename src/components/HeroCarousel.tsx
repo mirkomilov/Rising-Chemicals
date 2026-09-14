@@ -74,7 +74,7 @@ export default function HeroCarousel() {
         type="button"
         onClick={prev}
         aria-label="Oldingi"
-        className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:bg-black/50"
+        className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:scale-110 hover:bg-black/50"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -82,7 +82,7 @@ export default function HeroCarousel() {
         type="button"
         onClick={next}
         aria-label="Keyingi"
-        className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:bg-black/50"
+        className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:scale-110 hover:bg-black/50"
       >
         <ChevronRight className="h-5 w-5" />
       </button>

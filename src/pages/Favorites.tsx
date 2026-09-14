@@ -5,6 +5,7 @@ import type { Product } from "@/types/database.types";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import ProductCard from "@/components/ProductCard";
 import PageLoader from "@/components/PageLoader";
+import Seo from "@/components/Seo";
 
 export default function Favorites() {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ export default function Favorites() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
+      <Seo title={t("favorites.title")} noindex />
       <h2 className="mb-6 text-xl font-semibold">{t("favorites.title")}</h2>
 
       {loading ? (

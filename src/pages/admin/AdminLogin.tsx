@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/lib/supabaseClient";
 import AtomSpinner from "@/components/AtomSpinner";
+import Seo from "@/components/Seo";
 
 export default function AdminLogin() {
   const { t } = useTranslation();
@@ -27,6 +28,7 @@ export default function AdminLogin() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/30">
+      <Seo title="Admin" noindex />
       <form
         onSubmit={handleLogin}
         className="w-full max-w-sm space-y-4 rounded-lg border border-border bg-card p-6"

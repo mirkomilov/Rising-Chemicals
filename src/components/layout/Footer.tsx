@@ -9,7 +9,7 @@ const FACEBOOK_URL = "https://www.facebook.com/risingchemicals/";
 const WHATSAPP_URL = "https://wa.me/998888882838";
 const PHONE_DISPLAY = "+998 88 888 28 38";
 const PHONE_HREF = "tel:+998888882838";
-const EMAIL = "info@risingchemicals.uz";
+const EMAIL = "risingchemicals@gmail.com";
 
 const SOCIAL_LINKS = [
   { href: TELEGRAM_URL, label: "Telegram", icon: FaTelegramPlane },

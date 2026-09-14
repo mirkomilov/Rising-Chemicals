@@ -7,6 +7,7 @@ import type { CategoryTreeNode, Product } from "@/types/database.types";
 import { useLanguageStore } from "@/store/languageStore";
 import ProductCard from "@/components/ProductCard";
 import PageLoader from "@/components/PageLoader";
+import Seo from "@/components/Seo";
 import { cn } from "@/lib/utils";
 
 export default function Products() {
@@ -116,7 +117,7 @@ export default function Products() {
       <div key={node.id} className="mt-1">
         <div
           className={cn(
-            "flex items-center rounded-md pr-3",
+            "flex items-center rounded-md pr-3 transition-colors duration-200",
             !searchQuery && activeCategory === node.id
               ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:bg-muted"
@@ -159,14 +160,29 @@ export default function Products() {
     );
   }
 
+  const seoTitle = searchQuery
+    ? t("products.searchResultsTitle", { query: searchQuery })
+    : t("products.title");
+
   if (initialLoading) {
-    return <PageLoader />;
+    return (
+      <>
+        <Seo title={seoTitle} />
+        <PageLoader />
+      </>
+    );
   }
 
   return (
-    <div className="mx-auto flex max-w-7xl gap-6 px-4 py-8">
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 md:flex-row">
+      <Seo title={seoTitle} />
       {/* ===== SIDEBAR — KATALOG ===== */}
-      <aside className="w-64 shrink-0">
+      {/* Mobil/tablet ekranlarda mahsulotlar ustidan to'liq kenglikda,
+          balandligi cheklangan (scroll qiladigan) holatda chiqadi — aks
+          holda 256px'lik qattiq kenglik tor ekranda mahsulotlar ro'yxatini
+          deyarli butunlay siqib qo'yardi. Desktopda (md+) avvalgidek chapda
+          sobit ustun bo'lib qoladi. */}
+      <aside className="max-h-64 w-full shrink-0 overflow-y-auto rounded-lg border border-border p-3 md:max-h-none md:w-64 md:overflow-visible md:border-0 md:p-0">
         <h3 className="mb-3 font-semibold">{t("products.catalog")}</h3>
 
         {roots.map((root) => renderCategoryNode(root))}
@@ -174,11 +190,7 @@ export default function Products() {
 
       {/* ===== MAHSULOTLAR RO'YXATI ===== */}
       <section className="flex-1">
-        <h2 className="mb-6 text-xl font-semibold">
-          {searchQuery
-            ? t("products.searchResultsTitle", { query: searchQuery })
-            : t("products.title")}
-        </h2>
+        <h2 className="mb-6 text-xl font-semibold">{seoTitle}</h2>
         {productsLoading ? (
           <PageLoader className="min-h-[30vh] py-12" />
         ) : (

@@ -8,7 +8,9 @@
     "searchPlaceholder": "Поиск товара...",
     "clearSearch": "Очистить",
     "toggleTheme": "Переключить тему",
-    "toggleLanguage": "Сменить язык"
+    "toggleLanguage": "Сменить язык",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню"
   },
   "footer": {
     "tagline": "Качественная химическая продукция для промышленности и лабораторий — надёжные цены, точные технические характеристики и быстрая доставка.",
@@ -143,7 +145,14 @@
       "tablePrice": "Цена",
       "tableQuantity": "Количество",
       "tableTop": "Топ",
-      "confirmDelete": "Вы уверены, что хотите удалить товар?"
+      "confirmDelete": "Вы уверены, что хотите удалить товар?",
+      "searchPlaceholder": "Поиск по названию товара...",
+      "allCategories": "Все категории",
+      "noResults": "Ничего не найдено.",
+      "pageSizeLabel": "На странице:",
+      "pageInfo": "{{from}}-{{to}} из {{total}}",
+      "prevPage": "Назад",
+      "nextPage": "Вперёд"
     },
     "categories": {
       "title": "Категории",

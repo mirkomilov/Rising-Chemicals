@@ -6,6 +6,7 @@ import { productName } from "@/lib/i18n";
 import { supabase } from "@/lib/supabaseClient";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import AtomSpinner from "@/components/AtomSpinner";
+import Seo from "@/components/Seo";
 
 // Supabase'dan qaytadigan xatolar (PostgrestError, StorageError) doim ham
 // native Error emas — shuning uchun instanceof tekshiruvi ba'zida
@@ -93,6 +94,7 @@ export default function Cart() {
   if (success) {
     return (
       <div className="mx-auto max-w-xl px-4 py-24 text-center">
+        <Seo title={t("cart.successTitle")} noindex />
         <h2 className="text-2xl font-bold text-primary">{t("cart.successTitle")}</h2>
         <p className="mt-2 text-muted-foreground">{t("cart.successText")}</p>
       </div>
@@ -101,6 +103,7 @@ export default function Cart() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
+      <Seo title={t("cart.title")} noindex />
       <h2 className="mb-6 text-xl font-semibold">{t("cart.title")}</h2>
 
       {items.length === 0 ? (
@@ -111,7 +114,7 @@ export default function Cart() {
             {items.map(({ product, quantity }) => (
               <div
                 key={product.id}
-                className="flex items-center gap-4 rounded-lg border border-border bg-card p-3"
+                className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-card p-3 transition-colors duration-200 hover:border-primary/30"
               >
                 <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
                   {product.image_urls?.[0] && (
@@ -122,33 +125,35 @@ export default function Cart() {
                     />
                   )}
                 </div>
-                <div className="flex-1">
-                  <p className="font-medium">{productName(product, language)}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="line-clamp-2 font-medium">{productName(product, language)}</p>
                   <p className="text-sm text-primary">
                     {product.price.toLocaleString()} {t("common.currency")}
                   </p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="ml-auto flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => updateQuantity(product.id, Math.max(1, quantity - 1))}
+                      className="rounded-md border border-border p-1 transition-colors hover:bg-muted"
+                    >
+                      <Minus className="h-3.5 w-3.5" />
+                    </button>
+                    <span className="w-6 text-center text-sm">{quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(product.id, quantity + 1)}
+                      className="rounded-md border border-border p-1 transition-colors hover:bg-muted"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
                   <button
-                    onClick={() => updateQuantity(product.id, Math.max(1, quantity - 1))}
-                    className="rounded-md border border-border p-1 hover:bg-muted"
+                    onClick={() => removeItem(product.id)}
+                    className="p-2 text-muted-foreground transition-colors hover:text-destructive"
                   >
-                    <Minus className="h-3.5 w-3.5" />
-                  </button>
-                  <span className="w-6 text-center text-sm">{quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(product.id, quantity + 1)}
-                    className="rounded-md border border-border p-1 hover:bg-muted"
-                  >
-                    <Plus className="h-3.5 w-3.5" />
+                    <Trash2 className="h-4 w-4" />
                   </button>
                 </div>
-                <button
-                  onClick={() => removeItem(product.id)}
-                  className="p-2 text-muted-foreground hover:text-destructive"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
               </div>
             ))}
           </div>
@@ -160,7 +165,7 @@ export default function Cart() {
             {!showForm && (
               <button
                 onClick={() => setShowForm(true)}
-                className="rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground hover:opacity-90"
+                className="rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition hover:opacity-90 active:scale-95"
               >
                 {t("cart.checkout")}
               </button>
@@ -178,7 +183,7 @@ export default function Cart() {
                 placeholder={t("cart.fullName")}
                 value={form.full_name}
                 onChange={(e) => setForm({ ...form, full_name: e.target.value })}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
               <input
                 required
@@ -189,26 +194,26 @@ export default function Cart() {
                 onChange={(e) =>
                   setForm({ ...form, phone: e.target.value.replace(/[^\d+]/g, "") })
                 }
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
               <input
                 type="email"
                 placeholder={t("cart.email")}
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
               />
               <textarea
                 placeholder={t("cart.comment")}
                 value={form.comment}
                 onChange={(e) => setForm({ ...form, comment: e.target.value })}
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
                 rows={3}
               />
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground hover:opacity-90 disabled:opacity-50"
+                className="flex w-full items-center justify-center gap-2 rounded-md bg-secondary px-5 py-2.5 font-medium text-secondary-foreground transition hover:opacity-90 active:scale-95 disabled:opacity-50 disabled:active:scale-100"
               >
                 {submitting && <AtomSpinner size={18} />}
                 {submitting ? t("cart.submitting") : t("cart.submit")}

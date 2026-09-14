@@ -1,15 +1,17 @@
 import { useTranslation } from "react-i18next";
 import { Phone, Mail, MapPin } from "lucide-react";
+import Seo from "@/components/Seo";
 
 const PHONE_DISPLAY = "+998 88 888 28 38";
 const PHONE_HREF = "tel:+998888882838";
-const EMAIL = "info@risingchemicals.uz";
+const EMAIL = "risingchemicals@gmail.com";
 
 export default function Contact() {
   const { t } = useTranslation();
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
+      <Seo title={t("contact.title")} />
       <div className="grid gap-8 md:grid-cols-[1fr_1.6fr]">
         <div className="flex flex-col md:h-[340px]">
           <h2 className="mb-10 text-3xl font-semibold">{t("contact.title")}</h2>

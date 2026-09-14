@@ -18,7 +18,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const techParams = productTechParams(product, language);
 
   return (
-    <div className="flex flex-col rounded-lg border border-border bg-card p-3">
+    <div className="group flex flex-col rounded-lg border border-border bg-card p-3 transition-all duration-200 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
       <div className="relative">
         <Link to={`/products/${product.id}`} className="block">
           <div className="mb-2 aspect-square overflow-hidden rounded-md bg-muted">
@@ -26,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
               <img
                 src={product.image_urls[0]}
                 alt={productName(product, language)}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
               />
             )}
           </div>
@@ -37,14 +37,14 @@ export default function ProductCard({ product }: { product: Product }) {
           aria-label={
             isFavorite ? t("products.removeFromFavorites") : t("products.addToFavorites")
           }
-          className="absolute right-1.5 top-1.5 rounded-full bg-background/80 p-1.5 text-muted-foreground shadow-sm transition-colors hover:text-red-500"
+          className="absolute right-1.5 top-1.5 rounded-full bg-background/80 p-1.5 text-muted-foreground shadow-sm transition-colors hover:scale-110 hover:text-red-500"
         >
           <Heart className={cn("h-4 w-4", isFavorite && "fill-red-500 text-red-500")} />
         </button>
       </div>
 
       <Link to={`/products/${product.id}`} className="block">
-        <p className="line-clamp-2 text-sm font-medium hover:text-primary">
+        <p className="line-clamp-2 text-sm font-medium transition-colors group-hover:text-primary">
           {productName(product, language)}
         </p>
       </Link>
@@ -66,7 +66,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </p>
       <button
         onClick={() => addItem(product)}
-        className="mt-2 rounded-md bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground transition hover:opacity-90"
+        className="mt-2 rounded-md bg-secondary px-3 py-1.5 text-sm font-medium text-secondary-foreground transition hover:opacity-90 active:scale-95"
       >
         {t("products.addToCart")}
       </button>
