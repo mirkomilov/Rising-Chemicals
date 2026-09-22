@@ -14,3 +14,7 @@ dist
 # Har bir build'da scripts/generate-sitemap.mjs orqali avtomatik
 # generatsiya qilinadi — qo'lda commit qilish shart emas.
 public/sitemap.xml
+
+# Supabase CLI ning lokal keshi (project-ref, pooler-url va h.k.) —
+# mashinaga xos, commit qilish shart emas.
+supabase/.temp
