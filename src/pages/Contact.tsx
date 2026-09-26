@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Phone, Mail, MapPin } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 import Seo from "@/components/Seo";
 
 const PHONE_DISPLAY = "+998 88 888 28 38";
@@ -10,13 +11,13 @@ export default function Contact() {
   const { t } = useTranslation();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12">
       <Seo title={t("contact.title")} />
-      <div className="grid gap-8 md:grid-cols-[1fr_1.6fr]">
+      <div className="grid gap-6 md:grid-cols-[1fr_1.6fr] md:gap-8">
         <div className="flex flex-col md:h-[340px]">
-          <h2 className="mb-10 text-3xl font-semibold">{t("contact.title")}</h2>
+          <SectionHeading className="mb-6 md:mb-10">{t("contact.title")}</SectionHeading>
 
-          <div className="space-y-8 md:flex-1 md:flex md:flex-col md:justify-center md:pb-16">
+          <div className="space-y-6 sm:space-y-8 md:flex-1 md:flex md:flex-col md:justify-center md:pb-16">
             <div className="flex items-start gap-4">
               <MapPin className="mt-0.5 h-6 w-6 shrink-0 text-primary" />
               <div>
@@ -37,9 +38,9 @@ export default function Contact() {
             </div>
             <div className="flex items-start gap-4">
               <Mail className="mt-0.5 h-6 w-6 shrink-0 text-primary" />
-              <div>
+              <div className="min-w-0">
                 <p className="text-lg font-medium">{t("contact.emailTitle")}</p>
-                <a href={`mailto:${EMAIL}`} className="text-base text-muted-foreground hover:text-primary">
+                <a href={`mailto:${EMAIL}`} className="break-all text-base text-muted-foreground hover:text-primary">
                   {EMAIL}
                 </a>
               </div>
@@ -47,7 +48,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="h-72 overflow-hidden rounded-lg border border-border md:h-[340px]">
+        <div className="h-64 overflow-hidden rounded-lg border border-border sm:h-80 md:h-[340px]">
           <iframe
             title={t("contact.addressTitle")}
             src="https://www.google.com/maps?q=41.224861,69.323861&z=17&output=embed"

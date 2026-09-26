@@ -50,6 +50,7 @@
     "collapse": "Yopish",
     "addToFavorites": "Sevimlilarga qo'shish",
     "removeFromFavorites": "Sevimlilardan olib tashlash",
+    "readMore": "Batafsil",
     "detail": {
       "notFound": "Mahsulot topilmadi.",
       "back": "Orqaga",
@@ -89,6 +90,7 @@
   },
   "common": {
     "currency": "so'm",
+    "priceFrom": "{{price}} so'mdan",
     "loading": "Yuklanmoqda..."
   },
   "admin": {

@@ -23,8 +23,11 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-border bg-muted/40">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-10 lg:flex lg:items-start lg:justify-between lg:gap-8">
-        <div className="col-span-2 lg:col-span-1 lg:max-w-xs">
+      {/* Tor ekranda bir ustun: 2 ustunli holatda uzun e-mail manzili
+          ustun kengligiga sig'may, butun sahifada gorizontal scroll
+          paydo qilardi. */}
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-10 sm:grid-cols-2 lg:flex lg:items-start lg:justify-between lg:gap-8">
+        <div className="sm:col-span-2 lg:col-span-1 lg:max-w-xs">
           <img src="/rising-logo.png" alt="Rising Chemicals" className="mb-3 h-11 w-auto" />
           <p className="max-w-sm text-[15px] text-muted-foreground">{t("footer.tagline")}</p>
         </div>
@@ -80,7 +83,10 @@ export default function Footer() {
             </li>
             <li className="flex items-start gap-2">
               <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              <a href={`mailto:${EMAIL}`} className="transition hover:text-primary">
+              <a
+                href={`mailto:${EMAIL}`}
+                className="min-w-0 break-all transition hover:text-primary"
+              >
                 {EMAIL}
               </a>
             </li>

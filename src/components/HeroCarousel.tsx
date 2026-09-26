@@ -5,6 +5,9 @@ const SLIDES = Array.from({ length: 9 }, (_, i) => `/main-page/image${i + 1}.web
 
 const AUTO_ADVANCE_MS = 5000;
 
+// Slayd rasmlari 3:2 — konteyner ham aynan shu nisbatda bo'lgani uchun rasm
+// xira "bo'sh joy"siz to'liq to'ldiradi va balandlik ekran kengligiga o'zi
+// moslashadi. Yonidagi katalog paneli ham shu balandlikka cho'ziladi.
 export default function HeroCarousel() {
   const [active, setActive] = useState(0);
   // Faqat ko'rilgan/ko'rilishi kutilayotgan slaydlarni yuklaymiz, 9 tasini birdan emas.
@@ -37,7 +40,7 @@ export default function HeroCarousel() {
   }
 
   return (
-    <div className="relative h-[420px] w-full overflow-hidden rounded-lg bg-muted sm:h-[520px] md:h-[640px] md:flex-1">
+    <div className="relative aspect-[3/2] w-full overflow-hidden rounded-lg bg-muted md:flex-1">
       {SLIDES.map((src, i) => (
         <div
           key={src}
@@ -74,28 +77,28 @@ export default function HeroCarousel() {
         type="button"
         onClick={prev}
         aria-label="Oldingi"
-        className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:scale-110 hover:bg-black/50"
+        className="absolute left-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:scale-110 hover:bg-black/50 sm:left-3 sm:h-10 sm:w-10"
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
       </button>
       <button
         type="button"
         onClick={next}
         aria-label="Keyingi"
-        className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:scale-110 hover:bg-black/50"
+        className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-black/30 text-white backdrop-blur transition hover:scale-110 hover:bg-black/50 sm:right-3 sm:h-10 sm:w-10"
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
       </button>
 
-      <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2">
+      <div className="absolute inset-x-0 bottom-2.5 flex justify-center gap-1.5 sm:bottom-4 sm:gap-2">
         {SLIDES.map((src, i) => (
           <button
             key={src}
             type="button"
             onClick={() => setActive(i)}
             aria-label={`Slide ${i + 1}`}
-            className={`h-2 rounded-full transition-all ${
-              i === active ? "w-6 bg-white" : "w-2 bg-white/50 hover:bg-white/75"
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === active ? "w-7 bg-brand-teal" : "w-2 bg-white/60 hover:bg-white/90"
             }`}
           />
         ))}

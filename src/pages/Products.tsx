@@ -7,6 +7,8 @@ import type { CategoryTreeNode, Product } from "@/types/database.types";
 import { useLanguageStore } from "@/store/languageStore";
 import ProductCard from "@/components/ProductCard";
 import PageLoader from "@/components/PageLoader";
+import SectionHeading from "@/components/SectionHeading";
+import Reveal from "@/components/Reveal";
 import Seo from "@/components/Seo";
 import { cn } from "@/lib/utils";
 
@@ -174,7 +176,7 @@ export default function Products() {
   }
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-8 md:flex-row">
+    <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-6 sm:py-8 md:flex-row md:gap-6">
       <Seo title={seoTitle} />
       {/* ===== SIDEBAR — KATALOG ===== */}
       {/* Mobil/tablet ekranlarda mahsulotlar ustidan to'liq kenglikda,
@@ -182,7 +184,7 @@ export default function Products() {
           holda 256px'lik qattiq kenglik tor ekranda mahsulotlar ro'yxatini
           deyarli butunlay siqib qo'yardi. Desktopda (md+) avvalgidek chapda
           sobit ustun bo'lib qoladi. */}
-      <aside className="max-h-64 w-full shrink-0 overflow-y-auto rounded-lg border border-border p-3 md:max-h-none md:w-64 md:overflow-visible md:border-0 md:p-0">
+      <aside className="max-h-64 w-full shrink-0 overflow-y-auto rounded-lg border border-border p-3 md:max-h-none md:w-56 md:overflow-visible md:border-0 md:p-0 lg:w-64">
         <h3 className="mb-3 font-semibold">{t("products.catalog")}</h3>
 
         {roots.map((root) => renderCategoryNode(root))}
@@ -190,18 +192,25 @@ export default function Products() {
 
       {/* ===== MAHSULOTLAR RO'YXATI ===== */}
       <section className="flex-1">
-        <h2 className="mb-6 text-xl font-semibold">{seoTitle}</h2>
+        <SectionHeading>{seoTitle}</SectionHeading>
         {productsLoading ? (
           <PageLoader className="min-h-[30vh] py-12" />
         ) : (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          // lg'da yon paneldagi katalog ~256px joyni egallaydi, shuning uchun
+          // 4-ustunga faqat xl'dan o'tamiz — aks holda kartalar siqilib ketadi.
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-4">
             {products.length === 0 && (
-              <p className="text-sm text-muted-foreground">
+              <p className="col-span-full text-sm text-muted-foreground">
                 {searchQuery ? t("products.noSearchResults") : t("products.noProducts")}
               </p>
             )}
-            {products.map((p) => (
-              <ProductCard key={p.id} product={p} />
+            {products.map((p, i) => (
+              // Faqat birinchi ekranga tushadigan kartalar kechikadi —
+              // uzun ro'yxatda har bir kartani navbat bilan kutish
+              // sekin va zerikarli ko'rinardi.
+              <Reveal key={p.id} delay={Math.min(i, 7) * 60} className="h-full">
+                <ProductCard product={p} />
+              </Reveal>
             ))}
           </div>
         )}

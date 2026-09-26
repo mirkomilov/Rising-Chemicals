@@ -58,8 +58,43 @@
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    /* "Inter Variable" — @fontsource-variable/inter beradigan aniq oila nomi
+       (main.tsx'da import qilinadi). Oddiy "Inter" emas, aks holda shrift
+       topilmay tizim shriftiga tushib qolardi. */
+    font-family: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Sichqoncha bilan bosilganda halqa chiqmaydi, faqat klaviatura (Tab)
+     bilan harakatlanganda — skrinrider va klaviatura foydalanuvchilari
+     qayerda turganini ko'rishi uchun. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Tizimda "harakatni kamaytirish" yoqilgan bo'lsa (vestibulyar
+     sezuvchanlik, batareya tejash rejimi), barcha animatsiyalar
+     amalda o'chadi. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }

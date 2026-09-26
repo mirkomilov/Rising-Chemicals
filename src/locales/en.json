@@ -50,6 +50,7 @@
     "collapse": "Collapse",
     "addToFavorites": "Add to favorites",
     "removeFromFavorites": "Remove from favorites",
+    "readMore": "Read more",
     "detail": {
       "notFound": "Product not found.",
       "back": "Back",
@@ -89,6 +90,7 @@
   },
   "common": {
     "currency": "UZS",
+    "priceFrom": "from {{price}} UZS",
     "loading": "Loading..."
   },
   "admin": {

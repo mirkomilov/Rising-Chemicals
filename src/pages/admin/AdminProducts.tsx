@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabaseClient";
 import type { Product, Category, Brand, Locale } from "@/types/database.types";
@@ -51,6 +51,45 @@ function techParamsToRows(params: Record<string, string> | null | undefined): Te
 function rowsToTechParams(rows: TechParamRow[]): Record<string, string> {
   return Object.fromEntries(
     rows.filter((r) => r.key.trim() !== "").map((r) => [r.key, r.value])
+  );
+}
+
+// Bir qatordan boshlanadi va yozilgan matnga qarab o'zi cho'ziladi.
+// <input> bu yerda ishlamaydi: u printsipial ravishda bir qatorli element,
+// shuning uchun unda Enter ham, Shift+Enter ham yangi qator hosil qilmaydi
+// (aksincha, Enter formani jo'natib yuborardi).
+function AutoGrowTextarea({
+  className,
+  value,
+  ...props
+}: React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+  const ref = useRef<HTMLTextAreaElement>(null);
+
+  // Inline callback ref o'rniga useLayoutEffect: kontrolli <textarea>'da
+  // qiymat DOM'ga to'liq yozilishi bilan ref callback ishga tushishi bir
+  // xil paytda kafolatlanmaydi — natijada matn o'chirilganda scrollHeight
+  // ba'zan ESKI (hali uzunroq) matnga asoslanib hisoblanib, balandlik
+  // pastga qaytmay qolardi. useLayoutEffect esa `value` commit qilingach,
+  // brauzer bo'yashdan OLDIN ishga tushadi — o'lchov doim aniq bo'ladi.
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.height = "auto";
+    // scrollHeight ramkani hisobga olmaydi, box-sizing: border-box
+    // esa uni balandlik ichiga qo'shadi — shuning uchun ramka
+    // qalinligini (offsetHeight - clientHeight) qo'shmasak, oxirgi
+    // qator bir necha piksel qirqilib qolardi.
+    el.style.height = `${el.scrollHeight + el.offsetHeight - el.clientHeight}px`;
+  }, [value]);
+
+  return (
+    <textarea
+      {...props}
+      value={value}
+      ref={ref}
+      rows={1}
+      className={cn("resize-none overflow-hidden", className)}
+    />
   );
 }
 
@@ -447,14 +486,14 @@ export default function AdminProducts() {
               {t("admin.products.techParamsTitle", { locale: LOCALE_LABELS[activeLocale] })}
             </p>
             {techParams[activeLocale].map((tp, idx) => (
-              <div key={idx} className="mb-2 flex gap-2">
-                <input
+              <div key={idx} className="mb-2 flex flex-col gap-2 sm:flex-row">
+                <AutoGrowTextarea
                   placeholder={t("admin.products.techParamName")}
                   value={tp.key}
                   onChange={(e) => updateTechParamRow(activeLocale, idx, "key", e.target.value)}
                   className="flex-1 rounded-md border border-input bg-background px-3 py-2 text-sm"
                 />
-                <input
+                <AutoGrowTextarea
                   placeholder={t("admin.products.techParamValue")}
                   value={tp.value}
                   onChange={(e) => updateTechParamRow(activeLocale, idx, "value", e.target.value)}

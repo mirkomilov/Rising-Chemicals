@@ -9,7 +9,10 @@ export default function BrandsMarquee() {
         {[...LOGOS, ...LOGOS].map((src, i) => (
           <div
             key={i}
-            className="flex h-24 w-40 shrink-0 items-center justify-center rounded-lg border border-border bg-card p-4 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+            // bg-white (bg-card emas): logotiplar oq fon uchun chizilgan —
+            // qorong'i temada bg-card to'q bo'lib, ko'pchilik logotip
+            // butunlay ko'rinmay qolardi.
+            className="flex h-24 w-40 shrink-0 items-center justify-center rounded-lg border border-border bg-white p-4 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
           >
             <img
               src={src}

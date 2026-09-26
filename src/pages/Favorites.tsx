@@ -5,6 +5,8 @@ import type { Product } from "@/types/database.types";
 import { useFavoritesStore } from "@/store/favoritesStore";
 import ProductCard from "@/components/ProductCard";
 import PageLoader from "@/components/PageLoader";
+import SectionHeading from "@/components/SectionHeading";
+import Reveal from "@/components/Reveal";
 import Seo from "@/components/Seo";
 
 export default function Favorites() {
@@ -31,18 +33,20 @@ export default function Favorites() {
   }, [favoriteIds]);
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-6 sm:py-8">
       <Seo title={t("favorites.title")} noindex />
-      <h2 className="mb-6 text-xl font-semibold">{t("favorites.title")}</h2>
+      <SectionHeading>{t("favorites.title")}</SectionHeading>
 
       {loading ? (
         <PageLoader />
       ) : products.length === 0 ? (
         <p className="text-sm text-muted-foreground">{t("favorites.empty")}</p>
       ) : (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+          {products.map((p, i) => (
+            <Reveal key={p.id} delay={Math.min(i, 7) * 60} className="h-full">
+              <ProductCard product={p} />
+            </Reveal>
           ))}
         </div>
       )}

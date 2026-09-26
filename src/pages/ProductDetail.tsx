@@ -9,6 +9,7 @@ import { useFavoritesStore } from "@/store/favoritesStore";
 import { useLanguageStore } from "@/store/languageStore";
 import { productName, productDescription, productTechParams } from "@/lib/i18n";
 import PageLoader from "@/components/PageLoader";
+import FadeImage from "@/components/FadeImage";
 import Seo from "@/components/Seo";
 import { cn } from "@/lib/utils";
 
@@ -59,7 +60,7 @@ export default function ProductDetail() {
   const techParams = productTechParams(product, language);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-6 sm:py-8">
       <Seo title={productName(product, language)} />
       <Link
         to="/products"
@@ -69,11 +70,12 @@ export default function ProductDetail() {
         {t("products.detail.back")}
       </Link>
 
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 md:gap-8">
         <div>
           <div className="aspect-square overflow-hidden rounded-lg border border-border bg-muted">
             {images[activeImage] && (
-              <img
+              <FadeImage
+                key={images[activeImage]}
                 src={images[activeImage]}
                 alt={productName(product, language)}
                 className="h-full w-full object-cover"
@@ -81,7 +83,7 @@ export default function ProductDetail() {
             )}
           </div>
           {images.length > 1 && (
-            <div className="mt-3 flex gap-2">
+            <div className="mt-3 flex flex-wrap gap-2">
               {images.map((url, idx) => (
                 <button
                   key={url}
@@ -103,7 +105,7 @@ export default function ProductDetail() {
 
         <div>
           <div className="flex items-start justify-between gap-4">
-            <h1 className="text-2xl font-bold">{productName(product, language)}</h1>
+            <h1 className="text-xl font-bold sm:text-2xl">{productName(product, language)}</h1>
             <button
               type="button"
               onClick={() => toggleFavorite(product.id)}
@@ -122,8 +124,8 @@ export default function ProductDetail() {
               />
             </button>
           </div>
-          <p className="mt-2 text-2xl font-semibold text-primary">
-            {product.price.toLocaleString()} {t("common.currency")}
+          <p className="mt-2 text-xl font-semibold text-primary sm:text-2xl">
+            {t("common.priceFrom", { price: product.price.toLocaleString() })}
           </p>
 
           {description && (
@@ -144,8 +146,13 @@ export default function ProductDetail() {
                     key={k}
                     className="flex justify-between gap-4 border-b border-border py-1.5"
                   >
-                    <span>{k}</span>
-                    <span className="text-right font-medium text-foreground">{v}</span>
+                    {/* whitespace-pre-line — admin panelda kiritilgan qator
+                        ko'chirishlari saqlanadi, aks holda HTML ularni
+                        oddiy bo'sh joyga aylantirib yuborardi. */}
+                    <span className="min-w-0 whitespace-pre-line break-words">{k}</span>
+                    <span className="min-w-0 whitespace-pre-line break-words text-right font-medium text-foreground">
+                      {v}
+                    </span>
                   </li>
                 ))}
               </ul>

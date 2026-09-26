@@ -50,6 +50,7 @@
     "collapse": "Свернуть",
     "addToFavorites": "Добавить в избранное",
     "removeFromFavorites": "Убрать из избранного",
+    "readMore": "Подробнее",
     "detail": {
       "notFound": "Товар не найден.",
       "back": "Назад",
@@ -89,6 +90,7 @@
   },
   "common": {
     "currency": "сум",
+    "priceFrom": "от {{price}} сум",
     "loading": "Загрузка..."
   },
   "admin": {

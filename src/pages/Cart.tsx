@@ -6,6 +6,7 @@ import { productName } from "@/lib/i18n";
 import { supabase } from "@/lib/supabaseClient";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import AtomSpinner from "@/components/AtomSpinner";
+import SectionHeading from "@/components/SectionHeading";
 import Seo from "@/components/Seo";
 
 // Supabase'dan qaytadigan xatolar (PostgrestError, StorageError) doim ham
@@ -102,9 +103,9 @@ export default function Cart() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-4xl px-4 py-6 sm:py-8">
       <Seo title={t("cart.title")} noindex />
-      <h2 className="mb-6 text-xl font-semibold">{t("cart.title")}</h2>
+      <SectionHeading>{t("cart.title")}</SectionHeading>
 
       {items.length === 0 ? (
         <p className="text-muted-foreground">{t("cart.empty")}</p>
@@ -114,9 +115,9 @@ export default function Cart() {
             {items.map(({ product, quantity }) => (
               <div
                 key={product.id}
-                className="flex flex-wrap items-center gap-4 rounded-lg border border-border bg-card p-3 transition-colors duration-200 hover:border-primary/30"
+                className="flex flex-wrap items-center gap-3 rounded-lg border border-border bg-card p-3 transition-colors duration-200 hover:border-primary/30 sm:gap-4"
               >
-                <div className="h-16 w-16 shrink-0 overflow-hidden rounded-md bg-muted">
+                <div className="h-14 w-14 shrink-0 overflow-hidden rounded-md bg-muted sm:h-16 sm:w-16">
                   {product.image_urls?.[0] && (
                     <img
                       src={product.image_urls[0]}
@@ -125,7 +126,10 @@ export default function Cart() {
                     />
                   )}
                 </div>
-                <div className="min-w-0 flex-1">
+                {/* min-w — tor ekranda nom bilan miqdor tugmalari bitta
+                    qatorga tiqilib, nom uchun bir necha piksel qolib
+                    ketmasligi uchun: joy yetmasa tugmalar pastga tushadi. */}
+                <div className="min-w-[9rem] flex-1">
                   <p className="line-clamp-2 font-medium">{productName(product, language)}</p>
                   <p className="text-sm text-primary">
                     {product.price.toLocaleString()} {t("common.currency")}
@@ -158,14 +162,14 @@ export default function Cart() {
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-border pt-4">
-            <span className="text-lg font-semibold">
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+            <span className="text-base font-semibold sm:text-lg">
               {t("cart.total", { amount: totalAmount().toLocaleString() })}
             </span>
             {!showForm && (
               <button
                 onClick={() => setShowForm(true)}
-                className="rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition hover:opacity-90 active:scale-95"
+                className="w-full rounded-md bg-primary px-5 py-2.5 font-medium text-primary-foreground transition hover:opacity-90 active:scale-95 sm:w-auto"
               >
                 {t("cart.checkout")}
               </button>

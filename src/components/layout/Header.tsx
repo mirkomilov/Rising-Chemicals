@@ -35,14 +35,32 @@ export default function Header() {
   const totalCount = useCartStore((s) => s.totalCount());
   const favoritesCount = useFavoritesStore((s) => s.ids.length);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   // Sahifa almashganda mobil menyu avtomatik yopiladi.
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  // Sahifa yuqorida turganda header fonga singib ketadi; pastga
+  // aylantirilganda esa yengil soya bilan "ko'tariladi" va kontent uning
+  // ostidan o'tayotgani ko'rinadi.
+  useEffect(() => {
+    function onScroll() {
+      setScrolled(window.scrollY > 8);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border bg-background/95 backdrop-blur">
+    <header
+      className={cn(
+        "sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur transition-shadow duration-200",
+        scrolled ? "border-border shadow-sm" : "border-transparent"
+      )}
+    >
       {/* 3 ustunli grid (logo / nav / ikonkalar) — nav "position:absolute"
           bilan markazlashtirilsa, tablet va kichikroq noutbuk kengliklarida
           (taxminan 768-1150px) logo va o'ng tomondagi qidiruv+ikonkalar bilan
@@ -50,7 +68,7 @@ export default function Header() {
           hech qachon ustma-ust tushmasligini kafolatlaydi: logo va ikonkalar
           o'z tabiiy kengligini oladi, nav esa qolgan barcha joyni (1fr) egallab,
           shu bo'shliq ichida markazlashadi. */}
-      <div className="mx-auto grid h-20 max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-2 px-4 sm:gap-4">
+      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-2 px-4 sm:h-20 sm:gap-4">
         <Link to="/" className="flex shrink-0 items-center">
           {/* Logotip torroq ekranlarda kichikroq — aks holda qidiruv/savat/
               menyu ikonkalari bilan birga sig'may, gorizontal toshib ketadi. */}
@@ -131,7 +149,7 @@ export default function Header() {
           yashiringan) faqat shu kenglikdan kichik ekranlarda shu yerda
           ko'rinadi. */}
       {mobileOpen && (
-        <div className="border-t border-border bg-background px-4 py-4 lg:hidden">
+        <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-border bg-background px-4 py-4 sm:max-h-[calc(100vh-5rem)] lg:hidden">
           <div className="mb-4">
             <HeaderSearch mobile onNavigate={() => setMobileOpen(false)} />
           </div>
